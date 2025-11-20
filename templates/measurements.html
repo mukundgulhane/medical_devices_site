@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse & Foot Pressure Measurement</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+    }
+    h1, h2 {
+        color: #2a7ae2;
+        text-align: center;
+    }
+    .section {
+        background-color: #fff;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    img {
+        max-width: 100%;
+        display: block;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+    iframe {
+        width: 100%;
+        height: 315px;
+        margin: 10px 0;
+    }
+    ul {
+        padding-left: 20px;
+    }
+    .note {
+        background-color: #e7f3fe;
+        padding: 10px;
+        border-left: 5px solid #2a7ae2;
+        margin: 10px 0;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #1b335f;
+        padding: 12px 20px;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    .back-btn, .next-btn {
+        color: white;
+        border: 2px solid white;
+        padding: 7px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .next-btn { margin-right: 12px; }
+    .hamburger {
+        font-size: 28px;
+        border: 2px solid white;
+        padding: 5px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .hamburger-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background: #1b335f;
+        border-radius: 8px;
+        overflow: hidden;
+        min-width: 180px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        z-index: 2000;
+    }
+    .hamburger-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 12px;
+        display: block;
+        border-bottom: 1px solid #2f4f8f;
+    }
+    .hamburger-menu a:hover {
+        background: #293f6d;
+    }
+    .show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a class="back-btn" href="javascript:void(0);" onclick="goBack()">⬅ Back</a>
+
+    <div class="right-tools">
+        <a class="next-btn" href="{{ url_for('fabrication') }}">Next ➜</a>
+        <span class="hamburger" onclick="toggleMenu()">☰</span>
+    </div>
+
+    <!-- Hamburger dropdown inside navbar -->
+    <nav class="hamburger-menu" id="hamb-menu">
+        <a href="{{ url_for('index') }}">📘 Index</a>
+        <a href="{{ url_for('components') }}">🔧 Components</a>
+        <a href="{{ url_for('circuit_building') }}">🔌 Circuit Building</a>
+        <a href="{{ url_for('measurements') }}">📏 Measurements</a>
+        <a href="{{ url_for('fabrication') }}">🛠 Fabrication</a>
+        <a href="{{ url_for('projects') }}">📂 Projects</a>
+    </nav>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("hamb-menu").classList.toggle("show");
+}
+function goBack() {
+    window.history.back();
+}
+</script>
+
+<h1>Pulse & Foot Pressure Measurement Circuits</h1>
+
+<!-- Pulse Measurement Section -->
+<div class="section">
+    <h2>Pulse Measurement</h2>
+    <p><strong>Purpose:</strong> Measure the heart rate by detecting blood flow in a fingertip.</p>
+    <ul>
+        <li><strong>LED (Red/Infrared):</strong> Sends light into the fingertip.</li>
+        <li><strong>Photodiode/Phototransistor:</strong> Detects reflected light, converts to voltage signal.</li>
+        <li><strong>Op-Amp:</strong> Amplifies small voltage signal.</li>
+        <li><strong>Microcontroller:</strong> Reads signal, calculates BPM.</li>
+        <li><strong>LCD/Display:</strong> Shows heart rate value.</li>
+    </ul>
+    <div class="note">Mechanism: Light changes with blood volume → photodiode detects → amplified → filtered → counted → display BPM.</div>
+    <img src="{{ url_for('static', filename='pulse.jpeg') }}" alt="Pulse Measurement Circuit">
+    <iframe src="https://www.youtube.com/embed/z4ztmNpBmZk" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<!-- Foot Pressure Measurement Section -->
+<div class="section">
+    <h2>Foot Pressure Measurement</h2>
+    <p><strong>Purpose:</strong> Measure foot pressure using Force Sensitive Resistor (FSR).</p>
+    <ul>
+        <li><strong>FSR / Pressure Sensor:</strong> Resistance decreases as pressure increases.</li>
+        <li><strong>Voltage Divider:</strong> Converts resistance to voltage signal.</li>
+        <li><strong>Op-Amp (optional):</strong> Amplifies voltage signal.</li>
+        <li><strong>Microcontroller:</strong> Reads analog voltage and converts to pressure.</li>
+        <li><strong>LCD/Display:</strong> Shows foot pressure value.</li>
+    </ul>
+    <div class="note">Mechanism: Foot pressure → FSR resistance changes → voltage signal → amplification/ADC → display pressure.</div>
+    <img src="{{ url_for('static', filename='foot.jpeg') }}" alt="Foot Circuit">
+    <iframe src="https://www.youtube.com/embed/eW3SQCi0aTE" frameborder="0" allowfullscreen></iframe>
+</div>
+
+</body>
+</html>

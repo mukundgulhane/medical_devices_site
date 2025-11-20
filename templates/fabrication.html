@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Vitro Devices and Ergonomics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color:#f8fafc; color:#0f172a; margin:0; }
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius:1rem; }
+        .video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; }
+        .navbar {
+            width: 100%; display:flex; align-items:center; justify-content:space-between;
+            padding:0.5rem 1rem; background:linear-gradient(90deg,#0a3d62,#3c6382); color:white; position:sticky; top:0; z-index:1000; box-shadow:0 4px 12px rgba(0,0,0,0.18);
+        }
+        .nav-left, .nav-right { display:flex; align-items:center; gap:0.5rem; }
+        .nav-center { flex:1; text-align:center; font-weight:800; font-size:1.25rem; }
+        .icon-btn, .back-btn { background:white; color:#0a3d62; border:none; padding:0.4rem 0.8rem; border-radius:0.5rem; cursor:pointer; font-weight:600; }
+        .icon-btn:hover, .back-btn:hover { background:#f1f5f9; }
+        .hamburger-menu {
+            display:none; position:absolute; top:48px; right:0; background:white; min-width:180px; border-radius:0.5rem; box-shadow:0 6px 18px rgba(0,0,0,0.2); overflow:hidden;
+        }
+        .hamburger-menu a { display:block; padding:0.5rem 1rem; text-decoration:none; color:#0f1720; border-bottom:1px solid rgba(0,0,0,0.05); font-weight:600; }
+        .hamburger-menu a:hover { background:#f1f5f9; }
+        .scroll-mt { scroll-margin-top:4rem; }
+        section { max-width:1100px; margin:1rem auto; background:white; padding:2rem; border-radius:1rem; box-shadow:0 6px 18px rgba(0,0,0,0.05); }
+        h1,h2,h3 { margin-bottom:1rem; }
+        table { width:100%; border-collapse: collapse; }
+        th, td { padding:0.75rem; border:1px solid #e2e8f0; text-align:left; }
+        th { background:#f1f5f9; color:#1e40af; font-weight:700; }
+        ul.principle-list { list-style:none; padding-left:0; }
+        ul.principle-list li { position: relative; padding-left:1.5rem; margin-bottom:0.75rem; }
+        ul.principle-list li:before { content:"→"; position:absolute; left:0; color:#ef4444; font-weight:bold; font-size:1.25rem; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+    <div class="nav-left">
+        <button class="back-btn" onclick="history.back()">⬅ Back</button>
+    </div>
+    <div class="nav-center">In Vitro Devices & Ergonomics</div>
+    <div class="nav-right">
+        <div class="hamburger" style="position:relative;">
+            <button class="icon-btn" id="hamb-btn">☰</button>
+            <nav class="hamburger-menu" id="hamb-menu">
+                <a href="{{ url_for('frontpage') }}">🏠 Home</a>
+                <a href="{{ url_for('index') }}">📘 Index</a>
+                <a href="{{ url_for('components') }}">🔧 Components</a>
+                <a href="{{ url_for('circuit_building') }}">🔌 Circuit Building</a>
+                <a href="{{ url_for('measurements') }}">📏 Measurements</a>
+                <a href="{{ url_for('fabrication') }}">🛠 Fabrication</a>
+                <a href="{{ url_for('projects') }}">📂 Projects</a>
+            </nav>
+        </div>
+        <button class="icon-btn" id="next-btn">Next ➡</button>
+    </div>
+</div>
+
+<header class="text-center p-8 bg-blue-900 text-white shadow-xl">
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-2">In Vitro Devices and Ergonomics</h1>
+    <p class="text-lg md:text-xl font-medium opacity-80">Design, Fabrication, and Human Factors for Point-of-Care Diagnostics</p>
+</header>
+
+<div class="max-w-6xl mx-auto p-4 md:p-10 space-y-12">
+
+```
+<!-- MICROFLUIDICS SECTION -->
+<section id="microfluidics" class="scroll-mt">
+    <h2 class="text-3xl font-bold border-b-2 border-blue-700 pb-3 mb-6">1. Microfluidic Devices: Miniaturizing Diagnostics</h2>
+    <p>**Microfluidic devices** are used to manipulate small fluid volumes (micro to nano liters) for applications in diagnostics, chemical synthesis, and biological analysis. These devices are often called <strong>Lab-on-a-Chip</strong> systems because they integrate multiple laboratory functions on a single chip.</p>
+    <h3 class="text-2xl font-bold text-blue-700 mt-6 mb-4">Fabrication via PDMS and Laser Printing</h3>
+    <ul class="list-disc list-inside mb-6">
+        <li><strong>PDMS (Polydimethylsiloxane):</strong> Flexible polymer widely used for rapid prototyping of microfluidic channels.</li>
+        <li><strong>Laser Printing:</strong> Used to pattern the master mold for casting PDMS channels.</li>
+    </ul>
+    <h3 class="text-xl font-semibold mb-3">Simplified Fabrication Steps:</h3>
+    <ol class="list-decimal list-inside mb-6 pl-4">
+        <li>Design channel layout using CAD software.</li>
+        <li>Laser print or etch the mold pattern on a substrate.</li>
+        <li>Pour PDMS over the mold, degas to remove bubbles, and cure.</li>
+        <li>Bond the PDMS chip to glass or another polymer substrate.</li>
+    </ol>
+    <div class="flex justify-center my-6">
+        <img src="{{ url_for('static', filename='microfludic.jpeg') }}" alt="PDMS Microfluidic Chip" class="w-full max-w-2xl rounded-xl shadow-lg border">
+    </div>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/dxz10In1774" allowfullscreen></iframe>
+    </div>
+</section>
+
+<!-- LFA SECTION -->
+<section id="lfa" class="scroll-mt">
+    <h2 class="text-3xl font-bold border-b-2 border-blue-700 pb-3 mb-6">2. Lateral Flow Assay (LFA)</h2>
+    <p>A <strong>Lateral Flow Assay</strong> is a paper-based diagnostic platform that uses capillary action to allow fluid samples to flow across various reagents. LFAs are widely used for rapid diagnostic tests like pregnancy tests, infectious disease detection, and point-of-care tests.</p>
+    <h3 class="text-2xl font-bold text-blue-700 mt-6 mb-4">Basic Components:</h3>
+    <ul class="list-disc list-inside mb-6">
+        <li><strong>Sample Pad:</strong> Receives and filters the sample.</li>
+        <li><strong>Conjugate Pad:</strong> Contains labeled detection antibodies or probes.</li>
+        <li><strong>Nitrocellulose Membrane:</strong> Reaction zone with test (T) and control (C) lines.</li>
+        <li><strong>Absorbent Pad:</strong> Maintains continuous capillary flow.</li>
+    </ul>
+    <h3 class="text-xl font-semibold mb-3">Working Principle:</h3>
+    <ol class="list-decimal list-inside mb-6 pl-4">
+        <li>Sample absorbs into the conjugate pad, picking up labeled detection probes.</li>
+        <li>Sample-probe complex migrates along the nitrocellulose membrane to the Test Line (T-Line).</li>
+        <li>Excess fluid continues to the Control Line (C-Line) to validate the test.</li>
+    </ol>
+    <div class="flex justify-center my-6">
+        <img src="{{ url_for('static', filename='Lfa.jpeg') }}" alt="LFA Diagram" class="w-full max-w-2xl rounded-xl shadow-lg border">
+    </div>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/oYYTAPlwDE4" allowfullscreen></iframe>
+    </div>
+</section>
+
+<!-- ERGONOMICS SECTION -->
+<section id="ergonomics" class="scroll-mt">
+    <h2 class="text-3xl font-bold border-b-2 border-red-600 pb-3 mb-6">3. Ergonomics and Human Factors in IVD Device Design</h2>
+    <p>Ergonomics, or Human Factors Engineering, is crucial for IVD devices. Poorly designed devices can lead to sample handling errors, misinterpretation of results, or user discomfort. The goal is to design devices and workflows that fit the user and reduce errors.</p>
+    <table class="styled-table mb-8">
+        <thead>
+            <tr><th>Ergonomic Principle</th><th>Focus Area</th><th>IVD Device Application</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Physical Ergonomics</td><td>Anatomy & Biomechanics</td><td>Comfortable sampling tools and pipettes to reduce fatigue</td></tr>
+            <tr><td>Cognitive Ergonomics</td><td>Mental Processes</td><td>Clear visual cues, simple workflow, and readable displays</td></tr>
+            <tr><td>Organizational Ergonomics</td><td>Systems & Workflow</td><td>Logical packaging, instructions, and disposal procedures</td></tr>
+        </tbody>
+    </table>
+    <ul class="principle-list mb-8">
+        <li>High-contrast LFA test window to minimize reading errors.</li>
+        <li>Distinct reagent vial caps and labels to avoid mix-ups.</li>
+        <li>Simple digital feedback on electronic readers for confirmation.</li>
+    </ul>
+    <div class="flex justify-center my-6">
+        <img src="{{ url_for('static', filename='ergonomic.jpeg') }}" alt="IVD Workflow" class="w-full max-w-2xl rounded-xl shadow-lg border">
+    </div>
+    <div class="video-container mt-6">
+        <iframe src="https://www.youtube.com/embed/KBOyvZo3gFw" allowfullscreen></iframe>
+    </div>
+</section>
+```
+
+</div>
+
+<footer class="text-center bg-blue-900 text-white p-6 mt-12 shadow-inner">
+    &copy; 2025 In Vitro Devices and Ergonomics Report
+</footer>
+
+<script>
+    // HAMBURGER MENU LOGIC
+    const hambBtn = document.getElementById('hamb-btn');
+    const hambMenu = document.getElementById('hamb-menu');
+    hambBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hambMenu.style.display = (hambMenu.style.display==='block') ? 'none' : 'block';
+    });
+    document.addEventListener('click', (e)=>{
+        if(!hambBtn.contains(e.target) && !hambMenu.contains(e.target)) hambMenu.style.display='none';
+    });
+
+    const pages = [
+    "{{ url_for('frontpage') }}",
+    "{{ url_for('index') }}",
+    "{{ url_for('components') }}",
+    "{{ url_for('circuit_building') }}",
+    "{{ url_for('measurements') }}",
+    "{{ url_for('fabrication') }}",
+    "{{ url_for('projects') }}"
+];
+
+document.getElementById('next-btn').addEventListener('click', () => {
+    const currentPath = window.location.pathname; // /projects etc
+    const idx = pages.findIndex(p => {
+        return new URL(p, window.location.origin).pathname === currentPath;
+    });
+    if (idx >= 0 && idx < pages.length - 1) {
+        window.location.href = pages[idx + 1];
+    }
+});
+
+
+
+</script>
+
+</body>
+</html>

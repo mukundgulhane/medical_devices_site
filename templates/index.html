@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIPER Hyderabad - Medical Devices Department</title>
+
+```
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+    }
+
+    /* TOP NAVBAR */
+    .navbar {
+        background: #2c3e50;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+    }
+    .navbar a {
+        color: white;
+        font-size: 18px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .navbar a:hover {
+        color: #f1c40f;
+    }
+
+    /* CLEAN HERO BANNER */
+    .hero {
+        height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-text {
+        position: absolute;
+        font-size: 34px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 0px 3px 10px black; }
+    .hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.85;
+    }
+
+    /* Sections */
+    .section {
+        width: 80%;
+        margin: 25px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        color: #2c3e50;
+        border-left: 5px solid #2980b9;
+        padding-left: 10px;
+    }
+
+    .syllabus-list li {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+    .syllabus-list a {
+        text-decoration: none;
+        color: #2980b9;
+        font-weight: bold;
+    }
+    .syllabus-list a:hover {
+        text-decoration: underline;
+    }
+
+    /* Faculty */
+    .faculty-card {
+        background: #ecf0f1;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 6px;
+    }
+
+    /* Video Gallery */
+    .video-box {
+        margin-top: 10px;
+    }
+    iframe {
+        width: 100%;
+        height: 300px;
+        border-radius: 6px;
+    }
+
+    /* Footer */
+    .footer {
+        background: #2c3e50;
+        color: white;
+        padding: 25px;
+        text-align: center;
+        margin-top: 40px;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- NAVIGATION BAR -->
+<div class="navbar">
+    <a href="{{ url_for('frontpage') }}">Subjects</a>
+    <a href="#syllabus">Syllabus</a>
+    <a href="#faculty">Faculty</a>
+    <a href="#videos">Video Gallery</a>
+    <a href="#dept">Department</a>
+    <a href="#contact">Contact</a>
+</div>
+
+<!-- HERO BANNER -->
+<div class="hero" id="home">
+    <img src="{{ url_for('static', filename='banner_md.jpeg') }}" alt="Banner">
+</div>
+
+<!-- SYLLABUS SECTION -->
+<div class="section" id="syllabus">
+    <h2>M.Tech Medical Devices – Syllabus</h2>
+    <p>Click a topic to open its detailed page:</p>
+
+   <ul class="syllabus-list">
+
+<!-- Page 1 -->
+<li><a href="{{ url_for('components') }}">1. Introduction to components & circuit design</a></li>
+
+<!-- Page 2 (Breadboard + Arduino in SAME FILE) -->
+<li><a href="{{ url_for('circuit_building') }}#breadboard">2. Translating circuit diagram to breadboard</a></li>
+<li><a href="{{ url_for('circuit_building') }}#arduino">3. Designing circuits using Arduino</a></li>
+
+<!-- Page 3 (2 topics together) -->
+<li><a href="{{ url_for('measurements') }}">4. Pulse measurement circuit</a></li>
+<li><a href="{{ url_for('measurements') }}">5. Foot pressure measurement</a></li>
+
+<!-- Page 4 (4 topics together) -->
+<li><a href="{{ url_for('fabrication') }}">6. Microfluidic devices via laser printing</a></li>
+<li><a href="{{ url_for('fabrication') }}">7. Lateral flow fabrication</a></li>
+<li><a href="{{ url_for('fabrication') }}">8. Non-electrical instruments</a></li>
+<li><a href="{{ url_for('fabrication') }}">9. Ergonomics & design</a></li>
+
+<!-- Page 5 (3 topics together) -->
+<li><a href="{{ url_for('projects') }}">10. Arduino-based project</a></li>
+<li><a href="{{ url_for('projects') }}">11. Spectral analysis</a></li>
+<li><a href="{{ url_for('projects') }}">12. Demonstrations (NMR, HPLC, FESEM, Microscopy)</a></li>
+```
+
+</ul>
+
+```
+</div>
+
+<!-- FACULTY SECTION -->
+<div class="section" id="faculty">
+    <h2>Faculty Members</h2>
+
+    <div class="faculty-card">
+        <strong>Dr. Amit Asthana</strong> – Head, Dept. of Medical Devices
+    </div>
+
+    <div class="faculty-card">
+        <strong>Vidhya Sagar sir</strong> 
+    </div>
+
+</div>
+
+<!-- VIDEO GALLERY SECTION -->
+<div class="section" id="videos">
+    <h2>Video Gallery</h2>
+
+    <!-- IoT ECG Monitoring Project -->
+    <div style="width:100%; max-width:650px; margin:auto; padding:20px; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:30px; text-align:center;">
+      <h2>NIPER Hyderabad – IoT ECG Monitoring Project</h2>
+      <a href="https://www.linkedin.com/posts/department-of-medical-devices-niper-hyderabad_excitinginnovationalert-iotinhealthcare-ecgmonitoring-activity-7280163208731021312-UYaA" target="_blank" rel="noopener noreferrer">
+        <img src="{{ url_for('static', filename='heartproject.jpeg') }}" alt="IoT ECG Monitoring Project" style="width:100%; border-radius:8px; margin-bottom:15px; display:block;">
+      </a>
+      <p style="margin:8px 0 12px;">Click the image or the button to view this project on LinkedIn.</p>
+      <a href="https://www.linkedin.com/posts/department-of-medical-devices-niper-hyderabad_excitinginnovationalert-iotinhealthcare-ecgmonitoring-activity-7280163208731021312-UYaA" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px 18px; background:#0A66C2; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">
+         ▶ Watch on LinkedIn
+      </a>
+    </div>
+
+   <!-- Temperature Detection Project -->
+    <div style="width:100%; max-width:650px; margin:auto; padding:20px; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:30px; text-align:center;">
+      <h2>NIPER Hyderabad – Temperature Detection Project</h2>
+      <a href="https://www.linkedin.com/posts/department-of-medical-devices-niper-hyderabad_highlights-temperaturedetection-arduino-activity-7282319372172308480-NOGu" target="_blank" rel="noopener noreferrer">
+        <img src="{{ url_for('static', filename='nipertempproject.jpeg') }}" alt="Temperature Detection Project" style="width:100%; border-radius:8px; margin-bottom:15px; display:block;">
+      </a>
+      <p style="margin:8px 0 12px;">Click the image or the button to view the video on LinkedIn.</p>
+      <a href="https://www.linkedin.com/posts/department-of-medical-devices-niper-hyderabad_highlights-temperaturedetection-arduino-activity-7282319372172308480-NOGu" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px 18px; background:#0A66C2; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">
+        ▶ Watch on LinkedIn
+      </a>
+    </div>
+
+</div>
+
+<!-- DEPARTMENT INFO -->
+<div class="section" id="dept">
+    <h2>About the Department</h2>
+    <p>
+        The Department of Medical Devices at NIPER Hyderabad focuses on advanced 
+        medical instrumentation, design innovation, biosensors, microfluidics, and 
+        regulatory science. The program trains students to contribute to India's rapidly 
+        growing medical device sector.
+    </p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer" id="contact">
+    <h3>NIPER Hyderabad – Medical Devices Department</h3>
+    <p>Email: info@niperhyd.ac.in | Website: www.niperhyd.ac.in</p>
+    <p>© 2025 NIPER Hyderabad</p>
+</div>
+```
+
+</body>
+</html>

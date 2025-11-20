@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIPER Hyderabad - Department of Medical Devices</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'niper-red': '#B00020', /* A strong, academic red */
+                        'niper-dark': '#1e293b', /* Slate Blue/Dark Gray for background */
+                        'niper-light': '#fefefe', /* Near white */
+                        'accent-blue': '#3b82f6', /* Bright blue for links */
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 1000px;
+        }
+        .section-card {
+            transition: all 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        /* Custom style for the logo container to ensure a perfect circle/round shape */
+        .logo-box {
+            border: 4px solid #B00020;
+            padding: 4px; /* Internal padding */
+            background-color: white;
+            border-radius: 9999px; /* Full circle for the container */
+            overflow: hidden; /* Ensures the image respects the container's circle shape */
+        }
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 9999px; /* Full circle for the image */
+        }
+    </style>
+</head>
+<body class="font-sans bg-niper-dark min-h-screen text-niper-light">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Header Section with Logo and Title -->
+        <header class="flex flex-col md:flex-row items-center justify-start md:space-x-8 mb-10 p-6 bg-niper-light rounded-xl shadow-2xl border-b-4 border-niper-red">
+            
+            <!-- Logo (Side: Left) - Now correctly rounded -->
+            <div class="flex-shrink-0 mb-4 md:mb-0 logo-box w-32 h-32 md:w-48 md:h-48">
+                <!-- Using the uploaded file path again, with a rounded placeholder fallback -->
+                <img 
+                    src="{{ url_for('static', filename='MDlogo.jpeg') }}"
+
+                    alt="Department of Medical Devices NIPER Hyderabad Logo" 
+                    class="logo-image"
+                    onerror="this.onerror=null; this.src='https://placehold.co/160x160/B00020/ffffff?text=MD+LOGO'; this.classList.remove('logo-image'); this.classList.add('rounded-full', 'w-full', 'h-full');"
+                >
+            </div>
+
+            <!-- Department Title -->
+            <div class="text-center md:text-left text-niper-dark">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-1 text-niper-red">
+                    Department of Medical Devices
+                </h1>
+                <h2 class="text-xl sm:text-2xl font-semibold text-gray-700">
+                    NIPER Hyderabad
+                </h2>
+                <p class="text-sm text-gray-500 mt-1 italic">
+                    Innovating the Future of Healthcare Technology
+                </p>
+            </div>
+        </header>
+
+        <!-- Main Content: Section Links -->
+        <main class="mt-12">
+            <h3 class="text-center text-3xl font-bold mb-8 text-niper-light">Select Your Area of Specialization</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- CAD/CAM Section -->
+                <a href="cad-cam.html" class="block">
+                    <div class="section-card p-8 bg-niper-light rounded-xl shadow-xl border-t-4 border-accent-blue hover:border-niper-red cursor-pointer">
+                        <div class="text-niper-dark">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center space-x-2">
+                                <!-- Icon Placeholder for CAD/CAM (Gear) -->
+                                <svg class="w-7 h-7 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.526.313 1.133.313 1.659 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <span>CAD/CAM & Prototyping</span>
+                            </h4>
+                            <p class="text-gray-600 mb-4">Focuses on **Computer-Aided Design (CAD)**, simulations, additive manufacturing (3D printing), and physical rapid prototyping for medical devices and implants.</p>
+                            <p class="text-accent-blue font-semibold hover:underline">Click to explore CAD/CAM projects →</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Electronics Section (Updated link to /index) -->
+                <a href="/index" class="block">
+                    <div class="section-card p-8 bg-niper-light rounded-xl shadow-xl border-t-4 border-niper-red hover:border-accent-blue cursor-pointer">
+                        <div class="text-niper-dark">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center space-x-2">
+                                <!-- Icon Placeholder for Electronics (Circuit) -->
+                                <svg class="w-7 h-7 text-niper-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1v-3.25m-7-5.5v3.5l2.403 2.403c.334.334.484.512.63.753m-1-1l-2 2"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11V6m0 5l4 4-4 4"></path></svg>
+                                <span>Electronics & IoT Systems</span>
+                            </h4>
+                            <p class="text-gray-600 mb-4">Covers embedded systems, sensor integration, low-power circuit design, signal processing, and the development of connected **Internet of Medical Things (IoMT)** devices.</p>
+                            <p class="text-accent-blue font-semibold hover:underline">Click to explore Electronics & IoT projects →</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 text-gray-400 border-t border-gray-700 pt-6">
+            <p class="text-sm">Department of Medical Devices, NIPER Hyderabad. All rights reserved.</p>
+        </footer>
+
+    </div>
+</body>
+</html>
