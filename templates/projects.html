@@ -3,249 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical IoT Project Portfolio</title>
-    <!-- Load Tailwind CSS -->
+    <title>Medical Device Portfolio</title>
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
                     colors: {
-                        'primary-blue': '#1e40af',      
-                        'primary-dark': '#1f2937',      
-                        'soft-bg': '#f9fafb',           
-                        'card-bg': '#ffffff',           
-                        'accent-light': '#60a5fa',      
-                    }
+                        'primary-blue': '#1e3a8a', // Blue 800/900
+                        'accent-light': '#bfdbfe', // Blue 200
+                    },
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        .fixed-nav { position: sticky; top: 0; z-index: 50; }
-        .project-card { scroll-margin-top: 80px; } 
-
-        .youtube-video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 15%; 
-            height: 0;
-            overflow: hidden;
-            border-radius: 0.5rem;
-        }
-        .youtube-video-container iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        .local-video-thumb {
-            width: 100px; 
-            height: auto; 
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            display: block; 
-            margin-top: 0.5rem;
-        }
-        .local-video-thumb:hover {
-            transform: scale(1.05);
-        }
-
         .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); z-index: 100;
             display: none;
-            justify-content: center; align-items: center;
+            position: fixed;
+            z-index: 50;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
         }
         .modal-content {
-            max-width: 90%; max-height: 90%; 
-            object-fit: contain;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
-            border-radius: 0.75rem;
+            max-width: 95%;
+            max-height: 95vh; /* Use viewport height for better fit */
+            width: auto;
+            height: auto;
+            border-radius: 12px;
+            object-fit: contain; /* Ensure image fits well */
         }
     </style>
 </head>
-<body class="font-sans bg-soft-bg text-primary-dark">
 
-    <!-- Header -->
-    <header class="p-4 md:p-6 bg-primary-dark text-white shadow-xl">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            
-            <!-- Home Button (Fixed for Flask) -->
-            <a href="{{ url_for('index') }}" class="flex items-center space-x-1 text-base font-semibold text-accent-light hover:text-white transition duration-200 p-2 -ml-2 rounded-lg hover:bg-white/10 flex-shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3
-                             m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                </svg>
-                <span class="hidden sm:inline">Home</span>
-            </a>
+<body class="bg-gray-50 font-sans">
 
-            <!-- Title -->
-            <div class="text-center flex-grow">
-                <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight">Medical Devices & IoT Portfolio</h1>
-                <p class="text-sm font-medium opacity-80 hidden sm:block">Connected Health Solutions: From Circuit to Cloud</p>
-            </div>
+<!-- ================= HEADER ================= -->
+<header class="bg-primary-blue text-white p-4 shadow-2xl flex justify-between items-center sticky top-0 z-40">
+    <!-- Left: Home Button -->
+    <a href="{{ url_for('index') }}" 
+   class="flex items-center space-x-1 text-base font-semibold text-accent-light hover:text-white transition duration-200 p-2 -ml-2 rounded-lg hover:bg-white/10 flex-shrink-0">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3
+                m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+    </svg>
+    <span class="hidden sm:inline">Home</span>
+</a>
 
-            <div class="w-10 sm:w-20 flex-shrink-0"></div>
-        </div>
-    </header>
 
-    <!-- Navigation Dropdown -->
-    <nav class="fixed-nav bg-card-bg shadow-lg py-3 border-b border-gray-200">
-        <div class="max-w-4xl mx-auto px-4 flex justify-center">
-            <div class="relative inline-block text-left">
-                <button id="dropdown-toggle" class="inline-flex justify-center w-full rounded-lg border border-gray-300 shadow-sm px-5 py-1.5 bg-white text-md font-medium text-primary-blue hover:bg-gray-50 focus:outline-none transition duration-150" type="button">
-                    Jump to Project <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                </button>
-                <div id="dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 hidden">
-                    <div class="py-1">
-                        <a href="#project-p1" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P1: Vital Sign Monitor</a>
-                        <a href="#project-p2" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P2: [Project Name]</a>
-                        <a href="#project-p3" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P3: [Project Name]</a>
-                        <a href="#project-p4" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P4: [Project Name]</a>
-                        <a href="#project-p5" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P5: [Project Name]</a>
-                        <a href="#project-p6" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P6: [Project Name]</a>
-                        <a href="#project-p7" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P7: [Project Name]</a>
-                        <a href="#project-p8" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P8: [Project Name]</a>
-                        <a href="#project-p9" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P9: [Project Name]</a>
-                        <a href="#project-p10" class="dropdown-item block px-4 py-2 text-md text-gray-700 hover:bg-soft-bg hover:text-primary-blue">P10: [Project Name]</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Center: Title -->
+    <h1 class="text-xl sm:text-2xl font-extrabold flex-grow text-center mx-4">Medical Device & IoT Projects</h1>
+
+    <!-- Right: Dropdown Navigation (Improved Semantics/A11y) -->
+    <nav class="relative flex-shrink-0">
+        <button id="dropdown-toggle" 
+                class="bg-white text-primary-blue px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-semibold shadow-md transition duration-200 hover:ring-2 hover:ring-white"
+                aria-expanded="false" 
+                aria-haspopup="true">
+            Select Project ▾
+        </button>
+
+        <ul id="dropdown-menu" class="absolute right-0 mt-2 bg-white shadow-xl rounded-lg hidden w-56 text-gray-800 z-50 overflow-hidden ring-1 ring-gray-200">
+            <!-- Note: href="#" and return false for JS navigation within the single file -->
+            <li><a href="#" onclick="showProject('p1'); return false;" class="block px-4 py-2 hover:bg-blue-50 transition duration-150 text-primary-blue font-bold">P1: 3 Axis RoboArm</a></li>
+            <li><a href="#" onclick="showProject('p2'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P2: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p3'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P3: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p4'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P4: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p5'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P5: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p6'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P6: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p7'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P7: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p8'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P8: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p9'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P9: Coming Soon</a></li>
+            <li><a href="#" onclick="showProject('p10'); return false;" class="block px-4 py-2 hover:bg-gray-100 transition duration-150">P10: Coming Soon</a></li>
+        </ul>
     </nav>
+</header>
 
-    <!-- Main Content Area -->
-    <div class="max-w-4xl mx-auto p-4 md:p-8 space-y-10">
-        <!-- PROJECT 1 -->
-        <section id="project-p1" class="project-card bg-card-bg p-6 rounded-xl shadow-xl border-t-4 border-primary-blue transition duration-500 hover:shadow-2xl">
-            <h2 class="text-3xl font-extrabold text-primary-dark border-b-2 border-accent-light pb-3 mb-5">P1: Smart Wearable Vital Sign Monitor</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 space-y-4">
-                    <h3 class="text-xl font-bold text-primary-blue">Clinical Application & Overview</h3>
-                    <p class="text-base text-gray-700 leading-relaxed">
-                        A low-power, continuous monitoring wearable for real-time tracking of patient **vital signs** (Heart Rate, SpO2, and Body Temperature). The device prioritizes data security and uses a robust wireless protocol to communicate with an external medical data platform, supporting remote patient monitoring (RPM).
-                    </p>
-                    
-                    <h3 class="text-xl font-bold text-primary-blue pt-2">YouTube Demonstration (Minimalist View)</h3>
-                    <div class="youtube-video-container">
-                        <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE" title="Vital Sign Monitor Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+<div class="p-4 sm:p-6 max-w-7xl mx-auto">
 
-                    <div class="pt-4">
-                        <h3 class="text-xl font-bold text-primary-blue mb-3">Project Visuals (Prototype & Schematic)</h3>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <div class="flex-1">
-                                <h4 class="text-lg font-semibold text-gray-800 mb-2">Prototype Image</h4>
-                                <img id="p1-image-thumb" src="https://placehold.co/300x200/1e40af/ffffff?text=CLICK+TO+ENLARGE+PROTOTYPE" class="w-full rounded-lg shadow-lg cursor-pointer border-2 border-gray-200 transition duration-300 hover:shadow-xl hover:scale-[1.02]" data-full-src="https://placehold.co/800x600/1e40af/ffffff?text=FULL+SIZE+PROTOTYPE+IMAGE" onclick="openModal(this.getAttribute('data-full-src'), 'Vital Sign Monitor Prototype')">
-                                <p class="text-xs text-gray-500 mt-1 italic text-center">Click image to view full details.</p>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="text-lg font-semibold text-gray-800 mb-2">Circuit Diagram</h4>
-                                <img src="https://placehold.co/300x200/4f46e5/ffffff?text=CLICK+TO+ENLARGE+SCHEMATIC" class="w-full rounded-lg shadow-md cursor-pointer border-2 border-gray-200 transition duration-300 hover:shadow-xl hover:scale-[1.02]" data-full-src="https://placehold.co/800x600/4f46e5/ffffff?text=FULL+SIZE+CIRCUIT+SCHEMATIC" onclick="openModal(this.getAttribute('data-full-src'), 'Vital Sign Monitor Circuit Diagram')">
-                                <p class="text-xs text-gray-500 mt-1 italic text-center">Click image to view full details.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lg:col-span-1 border-l-2 border-gray-200 lg:pl-4 space-y-4">
-                    <div class="p-3 bg-soft-bg rounded-lg shadow-inner">
-                        <h3 class="text-xl font-bold text-primary-blue mb-3">Key Technologies</h3>
-                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1 pl-1">
-                            <li>**MCU:** ESP32-S3 (Secure Wi-Fi)</li>
-                            <li>**Sensors:** MAX30102 (HR/SpO2)</li>
-                            <li>**OS:** FreeRTOS</li>
-                            <li>**Cloud:** AWS IoT Core / MQTT</li>
-                            <li>**Standards:** IEC 60601 Focus</li>
-                        </ul>
-                    </div>
+<!-- ================= PROJECT 1 (VISIBLE DEFAULT) ================= -->
+<section id="project-p1" class="project-section">
 
-                    <div class="pt-2 p-3 bg-soft-bg rounded-lg shadow-inner">
-                        <h3 class="text-xl font-bold text-primary-blue mb-2">Detailed Technical Video</h3>
-                        <p class="text-sm text-gray-700 mb-2">Click to play full-screen.</p>
-                        <video id="local-technical-video" src="https://www.w3schools.com/html/mov_bbb.mp4" class="local-video-thumb" preload="metadata" onclick="playFullscreenVideo(this)">Your browser does not support the video tag.</video>
-                    </div>
-                </div>
+    <h2 class="text-3xl font-bold text-primary-blue mb-6 border-b-2 pb-2">P1: 3 Axis RoboArm</h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- LEFT CONTENT -->
+        <article class="lg:col-span-2 bg-white p-6 rounded-xl shadow-xl">
+
+            <p class="text-gray-700 text-lg leading-relaxed mb-6">
+    The 3-axis robotic arm assists in precise sample handling and automated reagent dispensing, minimizing human error. It supports surgical simulations for training and preoperative planning. Integration with IoT enables remote monitoring and control in clinical environments. The system improves efficiency, repeatability, and safety in routine medical tasks. Its precise motion control and automation enhance the overall workflow of laboratory and clinical procedures.
+</p>
+
+
+            <h3 class="text-2xl font-bold text-primary-blue mb-4 border-t pt-4">Project Visuals</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+    <h4 class="text-xl font-semibold mb-2 text-gray-800">Prototype Image</h4>
+    <img src="{{ url_for('static', filename='3axisrarm.jpeg') }}"
+         alt="Close-up image of the 3-axis robotic arm prototype showing 4 servo motors (SG90 and MG996R) connected to an ESP32 microcontroller with wiring and mechanical joints."
+         class="rounded-lg cursor-pointer shadow-lg border-4 border-primary-blue/20 transition duration-300 hover:scale-[1.02] transform"
+         data-full-src="{{ url_for('static', filename='3axisrarm_full.jpeg') }}"
+         onclick="openModal(this.dataset.fullSrc, 'Prototype Image: 3-Axis Robotic Arm with 4 Servos and ESP32')">
+</div>
+
+
+    <div>
+      <h4 class="text-xl font-semibold mb-2 text-gray-800">Circuit Diagram</h4>
+      <img src="{{ url_for('static', filename='CirRobo.jpeg') }}"
+         alt="Circuit diagram showing ESP32 microcontroller connections to 4 servo motors (SG90 and MG996R) for a 3-axis robotic arm, including power, GPIO pins, and control lines."
+         class="rounded-lg cursor-pointer shadow-lg border-4 border-primary-blue/20 transition duration-300 hover:scale-[1.02] transform"
+         data-full-src="{{ url_for('static', filename='CirRoboArm_Full.jpeg') }}"
+         onclick="openModal(this.dataset.fullSrc, 'Circuit Diagram: 3-Axis Robotic Arm with 4 Servos and ESP32')">
+   </div>
+
+
             </div>
-        </section>
+        </article>
+
+        <!-- RIGHT CONTENT -->
+        <aside class="lg:col-span-1 space-y-6">
+
+            <div class="bg-blue-50 p-6 rounded-xl shadow-inner border-l-4 border-primary-blue">
+                <h3 class="text-2xl font-extrabold text-primary-blue mb-3">Key Technologies</h3>
+                <ul class="list-disc list-inside text-gray-700 mt-2 space-y-1 text-sm">
+                    
+    <li>ESP32</li>
+    <li>SG90 Servo (x3)</li>
+    <li>MG996R Servo (x1)</li>
+    <li>Breadboard</li>
+    <li>Jumper Wires</li>
+    <li>External 5V Power Supply</li>
+    <li>Blink IoT App</li>
+
+
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+    <h3 class="text-2xl font-extrabold text-primary-blue mb-3">Technical Video</h3>
+    <div class="youtube-video-container">
+        <iframe 
+            src="https://www.youtube.com/embed/c6mrcNEFBoA" 
+            title="3-Axis Robotic Arm Demo Video" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            class="rounded-lg shadow-xl w-full border-2 border-gray-200">
+        </iframe>
     </div>
+    <p class="text-center text-xs text-gray-500 mt-2">Click the video to watch a technical demonstration.</p>
+</div>
 
-    <footer class="text-center bg-primary-dark text-white p-4 mt-8 shadow-inner">
-        &copy; 2025 Team Medical Device & IoT Portfolio
-    </footer>
 
-    <div id="image-modal" class="modal" onclick="closeModal(event)">
-        <span class="absolute top-4 right-6 text-white text-5xl font-light cursor-pointer opacity-80 hover:opacity-100">&times;</span>
-        <img id="modal-image" class="modal-content" src="" alt="Full-size Project Image">
-        <div id="modal-caption" class="absolute bottom-4 p-3 text-white text-lg font-medium bg-black/50 rounded-lg"></div>
+        </aside>
     </div>
+</section>
 
-    <script>
-        const dropdownToggle = document.getElementById('dropdown-toggle');
-        const dropdownMenu = document.getElementById('dropdown-menu');
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
+<!-- ================= PLACEHOLDER PROJECTS (Kept simple) ================= -->
+<section id="project-p2" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P2: AI-Powered ECG Analysis (Coming Soon)</h2>
+    <p class="text-gray-600 mt-4">Details on machine learning algorithms applied to cardiovascular data.</p>
+</section>
 
-        dropdownToggle.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('hidden');
-        });
+<section id="project-p3" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P3: Remote Patient Monitoring Platform (Coming Soon)</h2>
+</section>
 
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', () => {
-                dropdownMenu.classList.add('hidden');
-            });
-        });
+<section id="project-p4" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P4: Surgical Robotics Subsystem (Coming Soon)</h2>
+</section>
+
+<section id="project-p5" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P5: Drug Delivery Pump Control Logic (Coming Soon)</h2>
+</section>
+
+<section id="project-p6" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P6: Smart Wearable for Rehabilitation (Coming Soon)</h2>
+</section>
+
+<section id="project-p7" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P7: Data Security and HIPAA Compliance (Coming Soon)</h2>
+</section>
+
+<section id="project-p8" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P8: Low-Power Biometric Sensor Interface (Coming Soon)</h2>
+</section>
+
+<section id="project-p9" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P9: Embedded Firmware for Calibration (Coming Soon)</h2>
+</section>
+
+<section id="project-p10" class="project-section hidden p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 class="text-3xl font-bold text-blue-900">P10: Real-Time Operating System (RTOS) Implementation (Coming Soon)</h2>
+</section>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-primary-blue text-white text-center p-4 mt-10 shadow-inner">
+    &copy; 2025 Medical Devices Portfolio - Designed with Tailwind CSS
+</footer>
+
+<!-- ================= MODAL FOR IMAGES (Improved A11y) ================= -->
+<div id="image-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-caption" onclick="closeModal(event)">
+    <!-- Changed span to a semantic button with ARIA label -->
+    <button class="absolute top-5 right-5 sm:right-8 text-white text-5xl cursor-pointer hover:text-red-400 transition duration-200 focus:outline-none focus:ring-4 ring-white rounded-full" 
+            aria-label="Close image viewer" 
+            onclick="closeModal(event)">&times;</button>
+    
+    <img id="modal-image" class="modal-content shadow-2xl" alt="Image zoomed in from the project portfolio.">
+    
+    <div id="modal-caption" class="text-white text-xl mt-4 max-w-4xl text-center px-4"></div>
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+    /* Dropdown Logic */
+    const dropdownToggle = document.getElementById("dropdown-toggle");
+    const dropdownMenu = document.getElementById("dropdown-menu");
+
+    dropdownToggle.onclick = () => {
+        const isHidden = dropdownMenu.classList.toggle("hidden");
+        // Toggle ARIA expanded state
+        dropdownToggle.setAttribute("aria-expanded", isHidden ? "false" : "true");
+    };
+
+    document.addEventListener("click", (e) => {
+        if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add("hidden");
+            dropdownToggle.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    /* Project Section Switching */
+    function showProject(id) {
+        document.querySelectorAll(".project-section")
+                    .forEach(sec => sec.classList.add("hidden"));
         
-        document.addEventListener('click', (event) => {
-            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.add('hidden');
-            }
-        });
+        const newSection = document.getElementById("project-" + id);
+        newSection.classList.remove("hidden");
+        
+        // Optional: Scroll to the top of the section for better navigation feel
+        newSection.scrollIntoView({ behavior: 'smooth' });
 
-        const modal = document.getElementById('image-modal');
-        const modalImage = document.getElementById('modal-image');
-        const modalCaption = document.getElementById('modal-caption');
+        // Close dropdown after selection
+        dropdownMenu.classList.add("hidden");
+        dropdownToggle.setAttribute("aria-expanded", "false");
+    }
 
-        function openModal(src, captionText) {
-            modalImage.src = src;
-            modalCaption.innerText = captionText;
-            modal.style.display = 'flex';
+    /* Image Modal Functions */
+    const modal = document.getElementById("image-modal");
+    const modalImg = document.getElementById("modal-image");
+    const modalCaption = document.getElementById("modal-caption");
+
+    function openModal(src, caption) {
+        modal.style.display = "flex";
+        modalImg.src = src;
+        modalCaption.textContent = caption;
+        modalImg.alt = caption; // Set alt text from caption
+        // Focus the close button for better keyboard navigation
+        document.querySelector('#image-modal button').focus(); 
+    }
+
+    function closeModal(e) {
+        // Close if clicking the overlay or the explicit close button
+        if (e.target === modal || e.target.tagName === "BUTTON") {
+            modal.style.display = "none";
+            modalImg.src = "";
+            // Return focus to the element that opened the modal (complex to implement perfectly, so skipping for brevity, but good practice)
         }
+    }
 
-        function closeModal(event) {
-            if (event.target === modal || event.target.tagName === 'SPAN') {
-                modal.style.display = 'none';
-                modalImage.src = "";
-                modalCaption.innerText = "";
-            }
-            if (event.target === modalImage || event.target === modalCaption) {
-                event.stopPropagation();
-            }
+    /* Keyboard control for modal (ESC key) */
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal({ target: modal });
         }
+    });
 
-        function playFullscreenVideo(videoElement) {
-            if (videoElement.requestFullscreen) { videoElement.requestFullscreen(); } 
-            else if (videoElement.mozRequestFullScreen) { videoElement.mozRequestFullScreen(); } 
-            else if (videoElement.webkitRequestFullscreen) { videoElement.webkitRequestFullscreen(); } 
-            else if (videoElement.msRequestFullscreen) { videoElement.msRequestFullscreen(); }
-            videoElement.play();
+    /* Fullscreen Video Playback */
+    function playFullscreenVideo(v) {
+        // Attempt to request fullscreen on play
+        if (v.requestFullscreen) {
+            v.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+                v.play(); // Play even if fullscreen fails
+            });
         }
+        v.play();
+    }
+</script>
 
-        document.addEventListener('fullscreenchange', () => {
-            const videoElement = document.getElementById('local-technical-video');
-            if (!document.fullscreenElement && videoElement) { videoElement.pause(); videoElement.currentTime = 0; }
-        });
-        document.addEventListener('webkitfullscreenchange', () => {
-            const videoElement = document.getElementById('local-technical-video');
-            if (!document.webkitFullscreenElement && videoElement) { videoElement.pause(); videoElement.currentTime = 0; }
-        });
-    </script>
 </body>
 </html>

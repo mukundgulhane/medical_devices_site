@@ -130,37 +130,170 @@ function goBack() {
 
 <h1>Pulse & Foot Pressure Measurement Circuits</h1>
 
-<!-- Pulse Measurement Section -->
-<div class="section">
-    <h2>Pulse Measurement</h2>
-    <p><strong>Purpose:</strong> Measure the heart rate by detecting blood flow in a fingertip.</p>
+
+<div class="section" style="margin-bottom:40px; line-height:1.6;">
+
+    <h2>Pulse Measurement (Heart Rate Monitoring)</h2>
+    <p>
+        Pulse measurement works on the principle of <strong>Photoplethysmography (PPG)</strong>, 
+        a non-invasive optical technique used in medical devices such as pulse oximeters, 
+        smartwatch health trackers, and clinical patient monitoring systems.
+    </p>
+
+    <!-- ------------------- Components --------------------- -->
+    <h3>Key Components</h3>
     <ul>
-        <li><strong>LED (Red/Infrared):</strong> Sends light into the fingertip.</li>
-        <li><strong>Photodiode/Phototransistor:</strong> Detects reflected light, converts to voltage signal.</li>
-        <li><strong>Op-Amp:</strong> Amplifies small voltage signal.</li>
-        <li><strong>Microcontroller:</strong> Reads signal, calculates BPM.</li>
-        <li><strong>LCD/Display:</strong> Shows heart rate value.</li>
+        <li><strong>LED (Red or IR):</strong> Emits light through the fingertip. Blood absorbs this light during each heartbeat.</li>
+        <li><strong>Photodiode/Phototransistor:</strong> Detects the reflected light coming from changes in blood volume.</li>
+        <li><strong>Op-Amp (LM358/LM324):</strong> Amplifies the small PPG signal and removes noise.</li>
+        <li><strong>Low-Pass Filter:</strong> Smoothens the signal to show the pulse waveform clearly.</li>
+        <li><strong>Microcontroller (Arduino/ESP32):</strong> Reads the analog values, processes peaks, and calculates BPM.</li>
+        <li><strong>Display (LCD/OLED):</strong> Shows the measured heart rate.</li>
     </ul>
-    <div class="note">Mechanism: Light changes with blood volume → photodiode detects → amplified → filtered → counted → display BPM.</div>
-    <img src="{{ url_for('static', filename='pulse.jpeg') }}" alt="Pulse Measurement Circuit">
-    <iframe src="https://www.youtube.com/embed/z4ztmNpBmZk" frameborder="0" allowfullscreen></iframe>
+
+    <!-- ------------------- Mechanism --------------------- -->
+    <h3>Mechanism (How PPG Works)</h3>
+    <p class="note">
+        The LED shines light into the fingertip → blood absorbs light.  
+        During each heartbeat:
+        <br><br>
+        <strong>Systole (Heart pumps):</strong> More blood flows → more absorption → less light reaches photodiode.  
+        <strong>Diastole (Heart relaxes):</strong> Blood volume reduces → less absorption → more reflected light detected.
+        <br><br>
+        These rising and falling light levels create a <strong>pulse waveform</strong> that represents heartbeats.
+    </p>
+     <br>
+    <img src="{{ url_for('static', filename='pulse.jpeg') }}"
+         alt="Pulse Measurement Circuit"
+         style="display:block; margin:0 auto; max-width:380px; height:auto; border-radius:10px; box-shadow:0 0 10px #ccc;">
+
+    <!-- ------------------- Deep Explanation --------------------- -->
+    <h3>Detailed Explanation (Medical + Electronics)</h3>
+    <ul>
+        <li><strong>Biological Aspect:</strong> Blood volume oscillates with every heartbeat; this optical change becomes the PPG signal.</li>
+        <li><strong>Signal Conditioning:</strong> Raw photodiode output is in microvolts → Op-Amp amplifies 20–200×.</li>
+        <li><strong>Filtering:</strong> A low-pass filter removes finger motion and electric noise.</li>
+        <li><strong>Peak Detection:</strong> Microcontroller identifies rising edges or peaks to count beats per minute (BPM).</li>
+        <li><strong>Output:</strong> BPM = Number of peaks in 10 seconds × 6 (or rolling average).</li>
+    </ul>
+
+    <!-- ------------------- Connections --------------------- -->
+    <h3>Connections (Easy Wiring Guide)</h3>
+    <ul>
+        <li>LED → 220Ω resistor → Digital Pin (D2 or D3)</li>
+        <li>Photodiode → Reverse biased → Op-Amp input</li>
+        <li>Op-Amp Output → Arduino A0 / ESP32 ADC pin</li>
+        <li>LCD/OLED → SDA/SCL → I2C pins</li>
+        <li>Common GND for LED, Op-Amp, and Microcontroller</li>
+    </ul>
+
+    <h3>Applications in Medical Devices</h3>
+    <ul>
+        <li>Pulse oximeters</li>
+        <li>Fitness trackers & smartwatches</li>
+        <li>Hospital patient monitors</li>
+        <li>Home-care diagnostic devices</li>
+        <li>Wearable continuous monitoring systems</li>
+    </ul>
+
+    <!-- Image -->
+    
+    <!-- Video -->
+    <br>
+    <div style="text-align:center;">
+        <iframe width="450" height="260"
+                src="https://www.youtube.com/embed/z4ztmNpBmZk"
+                frameborder="0" allowfullscreen
+                style="border-radius:8px;">
+        </iframe>
+    </div>
+
 </div>
 
+
 <!-- Foot Pressure Measurement Section -->
-<div class="section">
+<h1 style="text-align:center; margin-bottom:25px;">Foot Pressure Measurement (FSR-Based)</h1>
+
+<div class="section" style="margin-bottom:40px; line-height:1.6;">
+
     <h2>Foot Pressure Measurement</h2>
-    <p><strong>Purpose:</strong> Measure foot pressure using Force Sensitive Resistor (FSR).</p>
+    <p>
+        Foot pressure measurement is used in medical rehabilitation, gait analysis, prosthetics,
+        and wearable health monitoring. It operates using an 
+        <strong>FSR (Force Sensitive Resistor)</strong>, which converts applied force into a 
+        change in electrical resistance.
+    </p>
+
+    <!-- ------------------- Components --------------------- -->
+    <h3>Key Components</h3>
     <ul>
-        <li><strong>FSR / Pressure Sensor:</strong> Resistance decreases as pressure increases.</li>
-        <li><strong>Voltage Divider:</strong> Converts resistance to voltage signal.</li>
-        <li><strong>Op-Amp (optional):</strong> Amplifies voltage signal.</li>
-        <li><strong>Microcontroller:</strong> Reads analog voltage and converts to pressure.</li>
-        <li><strong>LCD/Display:</strong> Shows foot pressure value.</li>
+        <li><strong>FSR / Pressure Sensor:</strong> Resistance decreases as pressure increases, giving a measurable output.</li>
+        <li><strong>Voltage Divider:</strong> Converts FSR resistance changes into measurable voltage.</li>
+        <li><strong>Op-Amp (Optional):</strong> Amplifies the small voltage for better resolution.</li>
+        <li><strong>Microcontroller (Arduino/ESP32):</strong> Reads analog voltage through ADC and converts it to force/pressure.</li>
+        <li><strong>LCD/OLED Display:</strong> Shows pressure value, gait pattern, or load distribution.</li>
     </ul>
-    <div class="note">Mechanism: Foot pressure → FSR resistance changes → voltage signal → amplification/ADC → display pressure.</div>
-    <img src="{{ url_for('static', filename='foot.jpeg') }}" alt="Foot Circuit">
-    <iframe src="https://www.youtube.com/embed/eW3SQCi0aTE" frameborder="0" allowfullscreen></iframe>
+
+    <!-- ------------------- Mechanism --------------------- -->
+    <h3>Mechanism (How Foot Pressure is Detected)</h3>
+    <p class="note">
+        When a person steps on the FSR:
+        <br><br>
+        <strong>Low pressure:</strong> High resistance → low output voltage. <br>
+        <strong>High pressure:</strong> Low resistance → higher voltage output. <br><br>
+        The microcontroller reads these voltage variations through its ADC, maps them to force/pressure values,
+        and displays them in real-time.
+    </p>
+      <br>
+    <img src="{{ url_for('static', filename='foot.jpeg') }}"
+         alt="Foot Pressure Measurement Circuit"
+         style="display:block; margin:0 auto; max-width:380px; height:auto; border-radius:10px; box-shadow:0 0 10px #ccc;">
+
+    <!-- ------------------- Detailed Explanation --------------------- -->
+    <h3>Detailed Explanation (Medical + Electronics)</h3>
+    <ul>
+        <li><strong>Material Behavior:</strong> FSR has conductive particles that compress under force, lowering resistance.</li>
+        <li><strong>Voltage Divider Role:</strong> Converts non-linear FSR resistance into measurable voltage.</li>
+        <li><strong>Signal Conditioning:</strong> Optional op-amp improves sensitivity for low-pressure applications.</li>
+        <li><strong>ADC Conversion:</strong> Microcontroller maps 0–1023 (Arduino) or 0–4095 (ESP32) to pressure units.</li>
+        <li><strong>Calibration:</strong> Known weights are used to create a pressure-force mapping curve.</li>
+    </ul>
+
+    <!-- ------------------- Connections --------------------- -->
+    <h3>Connections (Easy Wiring Guide)</h3>
+    <ul>
+        <li>FSR one pin → 5V</li>
+        <li>FSR second pin → A0 (analog pin)</li>
+        <li>10kΩ resistor → A0 to GND (forms voltage divider)</li>
+        <li>Op-Amp output (if used) → A0 for amplified signal</li>
+        <li>LCD/OLED → SDA/SCL → I2C Pins</li>
+        <li>Common Ground between sensor and microcontroller</li>
+    </ul>
+
+    <!-- ------------------- Applications --------------------- -->
+    <h3>Applications in Medical Devices</h3>
+    <ul>
+        <li>Foot pressure rehabilitation systems</li>
+        <li>Gait analysis for stroke/neurological patients</li>
+        <li>Smart insoles for diabetic foot monitoring</li>
+        <li>Load distribution analysis in prosthetics</li>
+        <li>Sports biomechanics and training devices</li>
+    </ul>
+
+    <!-- Image -->
+   
+    <!-- Video -->
+    <br>
+    <div style="text-align:center;">
+        <iframe width="450" height="260"
+                src="https://www.youtube.com/embed/eW3SQCi0aTE"
+                frameborder="0" allowfullscreen
+                style="border-radius:8px;">
+        </iframe>
+    </div>
+
 </div>
+
 
 </body>
 </html>

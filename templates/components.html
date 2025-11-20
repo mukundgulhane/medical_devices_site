@@ -213,38 +213,273 @@
             <h2>Resistor</h2>
             <p>Limits current, drops voltage. Used in current limiting for LEDs, ECG circuits.</p>
             <p>Unit: Ohm (Ω)</p>
-            <img src="static/resistor.jpeg" alt="Resistor Symbol">
+            <!-- RESISTOR SECTION -->
+<div class="section" id="resistor">
+    
+    <p>A resistor is a fundamental electronic component widely used in medical devices to control current and voltage.</p>
+    <ul class="syllabus-list">
+        <li>Limits electric current in a circuit.</li>
+        <li>Ensures correct voltage for sensitive components.</li>
+        <li>Protects sensors and microcontrollers from damage.</li>
+        <li>Used in signal conditioning and biasing circuits.</li>
+        <li>Critical for accurate readings in ECG, pulse oximeters, infusion pumps.</li>
+        <li>Helps maintain device safety and reliability.</li>
+        <li>Available in various types: fixed, variable, and precision resistors.</li>
+    </ul>
+</div>
+<!-- HOW TO READ A RESISTOR SECTION -->
+<div class="section" id="read-resistor">
+    <h2>How to Read a Resistor</h2>
+    <p>Resistors are marked with colored bands to indicate their value and tolerance. Follow these steps:</p>
+    <ul class="syllabus-list">
+        <img src="static/resistor.jpeg" alt="Resistor Symbol" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+        <li>Identify the color bands on the resistor (usually 4 or 5 bands).</li>
+        <li>Read the first two (or three) bands as digits.</li>
+        <li>The next band is the multiplier (power of 10).</li>
+        <li>The last band shows tolerance (accuracy of the resistor).</li>
+        <li>Use a resistor color code chart to determine the exact value.</li>
+        <li>Ensure correct resistor selection for medical circuits to avoid errors.</li>
+    </ul>
+</div>
+
+
+           
         </div>
 
         <div class="component">
             <h2>Diode</h2>
-            <p>Allows current in one direction. Types: standard, LED, Zener. Used in protection circuits.</p>
-            <img src="static/diod.jpeg" alt="Diode Symbol">
+           <!-- DIODE SECTION -->
+<div class="section" id="diode">
+    
+    <p>A diode is an electronic component that allows current to flow in only one direction, providing control and protection in circuits.</p>
+    <ul class="syllabus-list">
+        <li>Allows current to flow in one direction only (forward-biased).</li>
+        <li>Blocks current in reverse direction (reverse-biased).</li>
+        <li>Used for **rectification** in power supplies of medical devices.</li>
+        <img src="static/diod.jpeg" alt="Diode Symbol" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+        <li>Protects circuits from voltage spikes and reverse polarity.</li>
+        <li>Essential for sensors, microcontrollers, and signal protection.</li>
+        <li>Available types: LED, Zener, Schottky, and standard diodes.</li>
+    </ul>
+</div>
+
+            
         </div>
 
         <div class="component">
             <h2>Inductor</h2>
-            <p>Stores energy in magnetic field; filters AC signals. Used in ECG signal smoothing.</p>
-            <img src="static/inductors.jpeg" alt="Inductor Symbol">
+            <!-- INDUCTOR SECTION -->
+<div class="section" id="inductor">
+    
+    <p>An inductor is a passive electronic component that stores energy in a magnetic field when current flows through it, widely used in medical electronics.</p>
+    <ul class="syllabus-list">
+        <li>Stores energy in a magnetic field.</li>
+        <li>Opposes sudden changes in current (acts as a filter).</li>
+        <li>Used in **signal filtering** and noise reduction in medical devices.</li>
+        <img src="static/inductors.jpeg" alt="Inductor Symbol" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+        <li>Critical for ECG, pulse sensors, and power supply circuits.</li>
+        <li>Types include air-core, iron-core, and toroidal inductors.</li>
+        <li>Helps maintain stable operation of sensitive circuits.</li>
+    </ul>
+</div>
+
+            
         </div>
 
         <div class="component">
             <h2>Capacitor</h2>
-            <p>Stores energy in electric field; blocks DC, passes AC. Used for filtering noise.</p>
-            <img src="static/capacitor.jpeg" alt="Capacitor Symbol">
+            <!-- CAPACITOR SECTION -->
+<div class="section" id="capacitor">
+    
+    <p>A capacitor is an electronic component that stores and releases electrical energy, essential for medical and electronic circuits.</p>
+    <ul class="syllabus-list">
+        <li>Stores electrical charge temporarily.</li>
+        <li>Used for **filtering, smoothing, and decoupling** in circuits.</li>
+        <li>Helps stabilize voltage in sensitive medical devices.</li>
+        <img src="static/capacitor.jpeg" alt="Capacitor Symbol" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+        <li>Essential in ECG, pulse oximeters, and sensor circuits.</li>
+        <li>Types include ceramic, electrolytic, tantalum, and film capacitors.</li>
+        <li>Improves performance and reliability of electronic systems.</li>
+    </ul>
+</div>
+
+            
         </div>
 
         <div class="component">
-            <h2>LED</h2>
-            <p>Light indicator. Shows device status, power ON/OFF.</p>
-            <img src="static/led.jpeg" alt="LED Symbol">
+           <h2>LED (Light Emitting Diode)</h2>
+            <!-- LED SECTION -->
+<div class="section" id="led">
+    
+    <p>An LED is a diode that emits light when current passes through it, commonly used for indicators and displays in medical devices.</p>
+    <ul class="syllabus-list">
+        <li>Emits light when forward-biased due to **electron-hole recombination** in the semiconductor material.</li>
+        <li>Electron drops from the conduction band to the valence band, releasing energy as photons (light).</li>
+        <li>Available in different colors; blue LEDs are harder to produce because they require **wide bandgap semiconductors** (like GaN) and precise fabrication.</li>
+        <li>Used in medical devices like pulse oximeters and display panels.</li>
+        <img src="static/led.jpeg" alt="LED Symbol" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+        <li>Low power consumption and long lifespan.</li>
+        <li>Must be connected with a current-limiting resistor to prevent damage.</li>
+        <li>Can also be used in optical sensors and signaling applications.</li>
+    </ul>
+</div>
+
+            
         </div>
 
         <div class="component">
-            <h2>Switch</h2>
-            <p>Controls ON/OFF state of circuits. Used in medical devices to start/stop instruments.</p>
-            <img src="static/Switches.jpeg" alt="Switch Symbol">
+           <!-- SWITCH SECTION -->
+<div class="section" id="switch">
+    <h2>Switch</h2>
+    <p>A switch is an electrical component that can open or close a circuit, controlling the flow of current in medical and electronic devices.</p>
+    <ul class="syllabus-list">
+        <li>Controls current flow by making (ON) or breaking (OFF) the circuit.</li>
+        <li>Types include toggle, push-button, slide, and rotary switches.</li>
+        <li>Examples in medical devices: ON/OFF switch in ECG machines, push-button in infusion pumps, rotary switch in ventilators.</li>
+        <img src="static/Switches.jpeg" alt="Switch Symbol" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+        <li>Ensures safety by allowing the device to be turned off quickly.</li>
+        <li>Can be mechanical or electronic (solid-state switches).</li>
+        <li>Used in electronics: controlling LED panels, power to microcontrollers, or activating alarms.</li>
+    </ul>
+</div>
+            
         </div>
+
+        <div class="component">
+    <!-- POTENTIOMETER SECTION -->
+    <div class="section" id="potentiometer">
+        <h2>Potentiometer (Variable Resistor)</h2>
+        <p>A potentiometer is a three-terminal resistor with a sliding or rotating contact that adjusts resistance. It is used to control voltage and signal levels in circuits.</p>
+        <ul class="syllabus-list">
+            <li>Adjusts voltage in a circuit by changing resistance.</li>
+            <li>Used for **calibration and tuning** in medical devices.</li>
+            <li>Examples: adjusting LED brightness, sensor sensitivity, or audio volume in medical equipment.</li>
+            <li>Three terminals: two fixed ends and one wiper (adjustable middle terminal).</li>
+            <img src="static\potentiometer.jpeg" alt="Potentiometer Symbol" style="display:block; margin:10px auto; max-width:200px; height:auto;" >
+            <li>Common types: rotary, slide, and multi-turn potentiometers.</li>
+            <li>Essential for precise control in ECG machines, infusion pumps, and ventilator sensors.</li>
+            <li>Can act as a voltage divider when needed in electronic circuits.</li>
+        </ul>
+        
+        
+
+    </div>
+</div>
+
+        
+
+
+<div class="component">
+    <h2>7-Segment Display</h2>
+    <p>A 7-segment display is used to show numeric data visually in electronic circuits.</p>
+    <ul class="syllabus-list">
+        <li>Used for displaying heart rate, temperature, or sensor readings.</li>
+        <li>Commonly driven using microcontrollers or BCD decoders.</li>
+        <img src="static/7segmentled.jpeg" alt="7-Segment Display" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+        <li>Easy to read, suitable for small portable medical devices.</li>
+        <li>Can be common cathode or common anode types.</li>
+        <li>Low power and compact for embedded devices.</li>
+    </ul>
+</div>
+
+<div class="component">
+    <h2>LCD Display</h2>
+    <p>Liquid Crystal Displays (LCD) show alphanumeric and graphical data in medical electronics.</p>
+    <img src="static/lcdesp32.jpeg" alt="LCD Display" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+    <ul class="syllabus-list">
+        <li>Used in patient monitoring, pulse oximeters, and infusion pumps.</li>
+        <li>Can be character or graphical displays.</li>
+        <li>Low power and readable under various lighting conditions.</li>
+        <li>Interfaced via parallel or I2C/SPI with microcontrollers.</li>
+        <li>Improves visualization of complex measurements.</li>
+    </ul>
+</div>
+
+<div class="component">
+    <h2>Transistors</h2>
+    <p>Transistors act as switches or amplifiers in medical circuits.</p>
+   <img src="static/transistor.jpeg" alt="Transistor" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+    <ul class="syllabus-list">
+        <li>NPN/PNP bipolar junction transistors amplify weak sensor signals.</li>
+        <li>MOSFETs used for power control or digital switching.</li>
+        <li>Used in ECG, pulse sensors, and microcontroller signal amplification.</li>
+        <li>Can be used to drive displays, buzzers, or actuators.</li>
+        <li>Critical for signal conditioning and protection of circuits.</li>
+    </ul>
+</div>
+
+<div class="component">
+    <h2>Crystals & Oscillators</h2>
+    <p>Provide precise timing reference for microcontrollers and devices.</p>
+    <img src="static/crystaloscillator.jpeg" alt="Crystal & Oscillator" style="display:block; margin:10px auto; max-width:220px; height:auto;">
+
+    <ul class="syllabus-list">
+        <li>Used in ECG/EEG data sampling for accurate readings.</li>
+        <li>Ensures microcontroller operates at correct frequency.</li>
+        <li>Common types: quartz crystals, ceramic resonators, MEMS oscillators.</li>
+        <li>Important for synchronization of digital medical devices.</li>
+        <li>Stable clock improves data reliability in sensors.</li>
+    </ul>
+</div>
+
+<div class="component">
+    <h2>Medical Sensors</h2>
+    <p>Commonly used sensors in medical devices and their applications:</p>
+    <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 100%; margin-top:10px;">
+        <thead>
+            <tr style="background-color:#f3f6f9; text-align:left;">
+                <th>Sensor</th>
+                <th>Function / Medical Use</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Pulse / Heart Rate Sensor</td>
+                <td>Measures heartbeat for patient monitoring and fitness devices.</td>
+            </tr>
+            <tr>
+                <td>Temperature Sensor (Thermistor / LM35)</td>
+                <td>Monitors body or ambient temperature in thermometers and incubators.</td>
+            </tr>
+            <tr>
+                <td>Pressure Sensor</td>
+                <td>Used in blood pressure monitors, ventilators, and infusion pumps.</td>
+            </tr>
+            <tr>
+                <td>Oxygen (SpO₂) Sensor</td>
+                <td>Measures oxygen saturation in blood for pulse oximeters.</td>
+            </tr>
+            <tr>
+                <td>Accelerometer / Gyroscope</td>
+                <td>Detects motion or orientation, used in fall detection or prosthetic devices.</td>
+            </tr>
+            <tr>
+                <td>ECG / Bio-potential Sensors</td>
+                <td>Measures electrical activity of the heart for diagnostics.</td>
+            </tr>
+            <tr>
+                <td>Flow Sensor</td>
+                <td>Monitors gas or liquid flow in respiratory or infusion devices.</td>
+            </tr>
+            <tr>
+                <td>Glucose Sensor</td>
+                <td>Measures blood sugar levels for diabetes monitoring.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
 
         <div class="circuit">
             <h2>Small Circuit Example</h2>

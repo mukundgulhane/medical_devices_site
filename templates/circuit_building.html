@@ -139,15 +139,257 @@ function toggleMenu() {
 
 <div class="section" id="breadboard">
 <h2>Familiarise With the Breadboard Layout</h2>
-<p>Understanding a breadboard is essential for building circuits before moving to PCB.</p>
-<div class="img-box"><img src="{{ url_for('static', filename='breadboard.jpeg') }}" class="img-clean"></div>
+<div class="component">
+    
+    <div class="img-box"><img src="{{ url_for('static', filename='breadboard.jpeg') }}" class="img-clean"></div>
+         style="display:block; margin:10px auto; max-width:250px; height:auto;">
+
+    <p>A breadboard is a reusable platform used to build and test electronic circuits without soldering. It is widely used in medical device prototyping, Arduino projects, and sensor testing because it allows quick modifications and safe experimentation.</p>
+
+    <h3>🔹 Structure of a Breadboard</h3>
+    <ul class="syllabus-list">
+        <li><b>Terminal Strips:</b> Middle area where components like resistors, LEDs, and ICs are placed.</li>
+        <li><b>Power Rails:</b> The long columns on both sides marked as + and – for 5V/3.3V and GND supply.</li>
+        <li><b>Separation Gap:</b> A center "IC gap" separating left and right rows to place IC chips.</li>
+        <li><b>Metal Clips:</b> Under the plastic are spring metal clamps connecting the holes electrically.</li>
+        <li><b>Labeling:</b> Rows named A–J and columns numbered 1–60 for easy mapping.</li>
+    </ul>
+
+    <h3>🔹 How a Breadboard Works (Mechanism)</h3>
+    <p>The breadboard has metal clips arranged under the holes that form electrical connections:</p>
+    <ul class="syllabus-list">
+        <li>Each horizontal row (5 holes) is internally connected.</li>
+        <li>Power rails run vertically along the sides for +5V / 3.3V / GND.</li>
+        <li>The middle gap keeps two sides electrically isolated for IC pins.</li>
+        <li>When a component leg is inserted, metal clips hold and connect it to the row.</li>
+        <li>No soldering is required; connections are temporary and reusable.</li>
+    </ul>
+
+    <h3>🔹 How to Connect Breadboard with Arduino</h3>
+    <ul class="syllabus-list">
+        <li><b>Step 1:</b> Connect Arduino <b>5V pin → breadboard + rail</b>.</li>
+        <li><b>Step 2:</b> Connect Arduino <b>GND pin → breadboard – rail</b>.</li>
+        <li><b>Step 3:</b> Place components (LED, sensor, resistor) in terminal strips.</li>
+        <li><b>Step 4:</b> Use jumper wires from Arduino digital pins (D2–D13) to breadboard rows.</li>
+        <li><b>Step 5:</b> For analog sensors, connect wires to <b>A0–A5</b> pins on Arduino.</li>
+        <li><b>Step 6:</b> Ensure power rails are connected on both sides using jumper wires.</li>
+    </ul>
+
+    <h3>🔹 Example Arduino Connections</h3>
+    <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width:100%; margin-top:10px;">
+        <thead>
+            <tr style="background-color:#f3f6f9;">
+                <th>Component</th>
+                <th>Breadboard Row</th>
+                <th>Arduino Pin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>LED (positive leg)</td>
+                <td>A12</td>
+                <td>D9</td>
+            </tr>
+            <tr>
+                <td>LED (negative leg)</td>
+                <td>A11</td>
+                <td>GND</td>
+            </tr>
+            <tr>
+                <td>Resistor</td>
+                <td>B12</td>
+                <td>Connected in series with LED</td>
+            </tr>
+            <tr>
+                <td>Temperature Sensor LM35</td>
+                <td>E20</td>
+                <td>A0</td>
+            </tr>
+            <tr>
+                <td>Push Button</td>
+                <td>C8</td>
+                <td>D2</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>🔹 Applications in Medical Device Prototyping</h3>
+    <ul class="syllabus-list">
+        <li>Testing pulse sensors, temperature sensors, and biosensors.</li>
+        <li>Building prototypes of wearable health monitoring systems.</li>
+        <li>Developing initial circuits for ventilator and infusion pump controllers.</li>
+        <li>Trying different power supply circuits safely.</li>
+        <li>Debugging sensor output using Arduino or ESP32.</li>
+    </ul>
+
+    <h3>🔹 Advantages</h3>
+    <ul class="syllabus-list">
+        <li>No soldering needed → safe for beginners.</li>
+        <li>Reusable and cost-effective.</li>
+        <li>Useful for testing multiple circuit designs.</li>
+        <li>Supports digital, analog, and low-power medical circuits.</li>
+        <li>Great for Arduino, ESP32, and Raspberry Pi prototyping.</li>
+    </ul>
+</div>
+
+
 <div class="img-box"><img src="{{ url_for('static', filename='breadboard2.jpeg') }}" class="img-clean"></div>
 </div>
 
 <div class="section" id="arduino">
 <h2>Arduino Uno Overview</h2>
-<p>Arduino Uno is a microcontroller board widely used for prototyping and learning electronics.</p>
+<div class="component">
+    
+
+    <img src="static/arduino_uno.jpeg" alt="Arduino Uno" 
+         style="display:block; margin:10px auto; max-width:250px; height:auto;">
+
+    <p>Arduino Uno is a beginner-friendly microcontroller board used for sensor interfacing, controlling outputs, and building electronic or medical device prototypes. It is based on the ATmega328P microcontroller.</p>
+
+    <h3>Main Components</h3>
+    <ul class="syllabus-list">
+        <li><b>ATmega328P Microcontroller:</b> The main processing chip. Example: reads pulse sensor data.</li>
+        <li><b>Digital Pins (0–13):</b> For switches, buzzers, and digital sensors. Example: medicine reminder buzzer.</li>
+        <li><b>Analog Pins (A0–A5):</b> Read continuous values. Example: LM35 for incubator temperature.</li>
+        <li><b>Power Pins (5V, 3.3V, GND):</b> Power sensors. Example: 3.3V SPO2 sensor supply.</li>
+        <li><b>USB Port:</b> Upload code and power the board.</li>
+        <li><b>Voltage Regulator:</b> Provides stable power to components.</li>
+        <li><b>Reset Button:</b> Restarts the program.</li>
+        <li><b>Barrel Jack:</b> External power input (7–12V).</li>
+        <li><b>Crystal Oscillator (16 MHz):</b> Maintains timing accuracy for signals.</li>
+        <li><b>TX/RX LEDs:</b> Indicate communication activity.</li>
+    </ul>
+
+    <h3>How Arduino Works (Mechanism)</h3>
+    <ul class="syllabus-list">
+        <li><b>Read:</b> Reads data from sensors. Example: pressure sensor in foot analysis.</li>
+        <li><b>Process:</b> Converts sensor signals into meaningful data. Example: converts temperature voltage to Celsius.</li>
+        <li><b>Output:</b> Controls devices like displays, motors, alarms. Example: displays heart rate.</li>
+    </ul>
+
+    <h3>Examples of Use</h3>
+    <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width:100%;">
+        <thead>
+            <tr style="background:#f3f6f9;">
+                <th>Example</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Smart Thermometer</td>
+                <td>Uses LM35 sensor with Arduino to display body temperature.</td>
+            </tr>
+            <tr>
+                <td>Pulse Monitor</td>
+                <td>Calculates heartbeat using IR-based pulse sensor.</td>
+            </tr>
+            <tr>
+                <td>Automatic Sanitizer</td>
+                <td>Ultrasonic sensor detects hand and activates pump.</td>
+            </tr>
+            <tr>
+                <td>Drug Delivery Model</td>
+                <td>Controls micro motor to supply doses at timing.</td>
+            </tr>
+            <tr>
+                <td>Fall Detection System</td>
+                <td>Accelerometer detects unusual movement and triggers alert.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Advantages</h3>
+    <ul class="syllabus-list">
+        <li>Easy for beginners and prototyping.</li>
+        <li>Supports many sensors and modules.</li>
+        <li>Low power unit suitable for medical devices.</li>
+        <li>Affordable and widely available.</li>
+    </ul>
+</div>
+
 <div class="img-box"><img src="{{ url_for('static', filename='microcontrolers.jpeg') }}" class="img-clean"></div>
+<div class="component">
+    <h2>Difference Between Arduino, ESP32, and Raspberry Pi</h2>
+
+    <p>This section explains how Arduino, ESP32, and Raspberry Pi differ in power, application, and use in medical device development.</p>
+
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width:100%; margin-top:10px;">
+        <thead>
+            <tr style="background-color:#eef2f6; text-align:left;">
+                <th>Feature</th>
+                <th>Arduino Uno</th>
+                <th>ESP32</th>
+                <th>Raspberry Pi</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><b>Type</b></td>
+                <td>Microcontroller</td>
+                <td>Microcontroller (Dual Core)</td>
+                <td>Mini Computer (Linux OS)</td>
+            </tr>
+            <tr>
+                <td><b>Processing Power</b></td>
+                <td>16 MHz</td>
+                <td>240 MHz Dual Core</td>
+                <td>1–1.8 GHz Quad Core</td>
+            </tr>
+            <tr>
+                <td><b>Connectivity</b></td>
+                <td>No WiFi/Bluetooth</td>
+                <td>WiFi + Bluetooth (Built-in)</td>
+                <td>WiFi, Bluetooth, Ethernet, USB, HDMI</td>
+            </tr>
+            <tr>
+                <td><b>Power Consumption</b></td>
+                <td>Very Low</td>
+                <td>Low–Moderate</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td><b>Programming</b></td>
+                <td>Arduino IDE (C/C++)</td>
+                <td>Arduino IDE / MicroPython</td>
+                <td>Python, C, C++, Java, etc.</td>
+            </tr>
+            <tr>
+                <td><b>Operating System</b></td>
+                <td>No OS (runs one loop)</td>
+                <td>No OS (real-time tasks)</td>
+                <td>Full OS (Raspberry Pi OS)</td>
+            </tr>
+            <tr>
+                <td><b>Ideal Use</b></td>
+                <td>Basic sensors, motors, simple control</td>
+                <td>IoT devices, wireless medical monitoring</td>
+                <td>AI, image processing, dashboards</td>
+            </tr>
+            <tr>
+                <td><b>Medical Device Example</b></td>
+                <td>Digital thermometer, pulse monitoring</td>
+                <td>Cloud-based pulse oximeter</td>
+                <td>AI-based ECG analyzer</td>
+            </tr>
+            <tr>
+                <td><b>Cost</b></td>
+                <td>Low</td>
+                <td>Moderate</td>
+                <td>High</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Summary</h3>
+    <ul class="syllabus-list">
+        <li><b>Arduino</b>: Best for beginners and simple sensor circuits.</li>
+        <li><b>ESP32</b>: Best for IoT and wireless medical applications.</li>
+        <li><b>Raspberry Pi</b>: Best for AI, imaging, and advanced computing.</li>
+    </ul>
+</div>
+
 </div>
 
 <div class="section">
@@ -165,19 +407,58 @@ function toggleMenu() {
 <div class="img-box"><img src="{{ url_for('static', filename='AuridinoConnection.jpeg') }}" class="img-clean"></div>
 </div>
 
+<!-- ================= VIDEO SECTION (COPY–PASTE READY) ================= -->
+
+<style>
+.section {
+    margin: 25px 0;
+    padding: 10px;
+}
+
+.video-box {
+    width: 100%;
+    max-width: 900px;  
+    margin: 20px auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+}
+
+.video-box iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+</style>
+
 <div class="section">
-<h2>Arduino YouTube Tutorials</h2>
-<h3>1. How Arduino Works</h3>
-<div class="video-box"><iframe src="https://www.youtube.com/embed/nL34zDTPkcs" frameborder="0" allowfullscreen></iframe></div>
-<h3>2. How to Make an Arduino at Home</h3>
-<div class="video-box"><iframe src="https://www.youtube.com/embed/0FqqxHlXNKk" frameborder="0" allowfullscreen></iframe></div>
+    <h2>Arduino YouTube Tutorials</h2>
+
+    <h3>1. How Arduino Works</h3>
+    <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/nL34zDTPkcs"
+        frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <h3>2. How to Make an Arduino at Home</h3>
+    <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/0FqqxHlXNKk"
+        frameborder="0" allowfullscreen></iframe>
+    </div>
 </div>
 
 <div class="section">
-<h2>Mini Arduino Project – Blink LED</h2>
-<p>Beginner-friendly project that teaches output control using Arduino.</p>
-<div class="video-box"><iframe src="https://www.youtube.com/embed/u6ilYC7LeKQ" frameborder="0" allowfullscreen></iframe></div>
+    <h2>Mini Arduino Project – Blink LED</h2>
+    <p>Beginner-friendly project that teaches output control using Arduino.</p>
+
+    <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/u6ilYC7LeKQ"
+        frameborder="0" allowfullscreen></iframe>
+    </div>
 </div>
+
+<!-- ================================================================ -->
 
 <div class="section">
 <h2>Mini Project – Automatic Night Lamp (LDR)</h2>
