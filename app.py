@@ -33,5 +33,23 @@ def fabrication():
 def projects():
     return render_template('projects.html')
 
+@app.route('/cadprojects')
+def cadprojects():
+    return render_template('cadprojects.html')
+
+@app.route('/firstpage')
+def firstpage():
+    return render_template('firstpage.html')
+
+@app.route('/secondcontent')
+def secondcontent():
+    return render_template('secondcontent.html')
+
+@app.route('/contentone')
+def contentone():
+    return render_template('contentone.html')
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Content - Product Data Exchange & CAPP</title>
+    <!-- Load Tailwind CSS from CDN for professional, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Set a modern, clean font */
+        html { 
+            font-family: 'Inter', sans-serif; 
+            /* Smooth scrolling for jump links */
+            scroll-behavior: smooth;
+        }
+        
+        /* Utility class for white links against the blue background */
+        .nav-link-white {
+            @apply px-3 py-2 rounded-lg text-sm font-medium text-white hover:bg-blue-500 transition duration-150 ease-in-out;
+        }
+        
+        /* Style for the icon buttons (Back/Next) */
+        .nav-icon-btn {
+            @apply p-2 rounded-full text-white hover:bg-blue-500 focus:outline-none transition duration-150;
+        }
+
+        /* Custom styling for content sections */
+        .content-list {
+            @apply list-decimal pl-5 ml-4 space-y-1;
+        }
+        .content-subheading {
+             @apply text-lg font-bold text-blue-700;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#2563eb', /* Blue 600 */
+                    }
+                }
+            }
+        }
+
+        // JavaScript to toggle the mobile hamburger menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Function for the working 'Back' button (uses browser history)
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</head>
+<!-- Body offset: pt-28 (7rem) to account for both fixed nav bars (16 + 12 = 28 units) -->
+<body class="bg-gray-50 min-h-screen pt-28">
+
+    <!-- 1. PRIMARY Navigation Bar (Fixed Top, Solid Blue) -->
+    <nav class="fixed top-0 left-0 right-0 bg-blue-600 shadow-xl z-50 h-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex justify-between h-full">
+
+                <!-- Left Section: Back Button and Home Link -->
+                <div class="flex items-center space-x-3">
+                    <!-- Back Button (Top Left) -->
+                    <button onclick="goBack()" class="nav-icon-btn" aria-label="Go Back to Previous Page">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    </button>
+                    <!-- Home Link (Side of Back) -->
+                    <a href="{{ url_for('firstpage') }}" class="nav-link-white">
+                        Home
+                    </a>
+                </div>
+
+                <!-- Right Section: Remaining Nav Links and Next Button (Top Right) -->
+                <div class="flex items-center space-x-4">
+                    <!-- Desktop Menu Links (Cleaned up) -->
+                    <div class="hidden md:flex md:items-center md:space-x-1">
+                        <a href="{{ url_for('contentone') }}" class="nav-link-white">Module 1</a>
+                        <a href="{{ url_for('cadprojects') }}" class="nav-link-white">CAD Projects</a>
+                    </div>
+                    
+                    <!-- Next Button (Top Right) -->
+                    <a href="{{ url_for('cadprojects') }}" class="nav-icon-btn bg-blue-700 hover:bg-blue-800" aria-label="Go to Next Module">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+
+                    <!-- Hamburger Button (Mobile) -->
+                    <button onclick="toggleMenu()" class="nav-icon-btn md:hidden" aria-label="Toggle Navigation Menu">
+                        <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-inner">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ url_for('firstpage') }}" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100">Module 1</a>
+                <a href="{{ url_for('cadprojects') }}" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100">CAD Projects</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. SECONDARY Navigation Bar (Fixed Below Primary Nav) -->
+    <nav class="fixed top-16 left-0 right-0 bg-gray-100 shadow-md z-40 h-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center space-x-4 overflow-x-auto">
+            <span class="text-sm font-bold text-gray-600 flex-shrink-0">JUMP TO:</span>
+            <!-- Jump Link for Part 7 -->
+            <a href="#part7" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition duration-150 flex-shrink-0">
+                Part 7: Product Data Exchange
+            </a>
+            <!-- Jump Link for Part 8 -->
+            <a href="#part8" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition duration-150 flex-shrink-0">
+                Part 8: Computer-Aided Process Planning (CAPP)
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-6 border-b-2 border-blue-600 pb-2">
+            CAD/CAM Module Content Overview
+        </h1>
+        
+        <!-- ============================================== -->
+        <!-- PART 7: Product Data Exchange -->
+        <!-- Increased mb-12 for better separation -->
+        <!-- ============================================== -->
+        <section id="part7" class="mb-12 pt-10 -mt-10 bg-white p-6 sm:p-8 rounded-xl shadow-2xl border-l-8 border-blue-600">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                Part 7: Product Data Exchange (IGES, STEP, ACIS, DXF, STL)
+            </h2>
+
+            <div class="space-y-6 text-gray-700">
+                <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Introduction to Product Data Exchange</h3>
+                <p>
+                    Product data exchange refers to the process of transferring digital design information between different CAD/CAM/CAE software systems.
+                    Since various software use different internal file formats, standard exchange formats ensure compatibility and interoperability across platforms.
+                    It helps designers, manufacturers, and engineers work collaboratively without data loss or rework.
+                </p>
+                
+                <p><strong>Key Objectives:</strong></p>
+                <ul class="list-disc pl-5 ml-4 space-y-1">
+                    <li>To share design models among different CAD/CAM systems.</li>
+                    <li>To maintain geometry, dimensions, and features during transfer.</li>
+                    <li>To ensure smooth communication across design and manufacturing processes.</li>
+                </ul>
+
+                <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Common Data Exchange Formats</h3>
+                
+                <!-- IGES -->
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="content-subheading">(a) IGES (Initial Graphics Exchange Specification)</h4>
+                    <p>
+                        Full form: <span class="font-medium">Initial Graphics Exchange Specification.</span>
+                        One of the oldest neutral file formats for CAD data. Developed by the U.S. Air Force in the late 1970s.
+                        File extension: <code class="bg-gray-200 px-1 rounded">.igs</code> / <code class="bg-gray-200 px-1 rounded">.iges</code>
+                    </p>
+                    <p class="mt-2">
+                        <strong>Features:</strong> Supports 2D and 3D geometry, annotations, wireframe, and surface models. ASCII text format, easy to read but large in size. Does not fully support solid modeling or parametric data.
+                        <br>
+                        <strong>Applications:</strong> Used to exchange models between software like AutoCAD, CATIA, and Pro/ENGINEER. Common in aerospace and mechanical design industries.
+                    </p>
+                </div>
+
+                <!-- STEP -->
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="content-subheading">(b) STEP (Standard for the Exchange of Product Model Data)</h4>
+                    <p>
+                        Full form: <span class="font-medium">Standard for the Exchange of Product model data (ISO 10303).</span> More advanced and comprehensive than IGES.
+                        File extension: <code class="bg-gray-200 px-1 rounded">.stp</code> / <code class="bg-gray-200 px-1 rounded">.step</code>
+                    </p>
+                    <p class="mt-2">
+                        <strong>Features:</strong> Supports 3D solid models, assembly data, product structure, and material info. Maintains product hierarchy and geometric accuracy. Provides better data integrity and reduces translation errors.
+                        <br>
+                        <strong>Advantages:</strong> Can exchange data between almost all CAD systems. Widely used in automotive, aerospace, and mechanical industries.
+                    </p>
+                </div>
+
+                <!-- ACIS -->
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="content-subheading">(c) ACIS</h4>
+                    <p>
+                        Full form: <span class="font-medium">Andy, Charles, Ian’s System</span> (named after developers at Spatial Corp). ACIS is a geometry modeling <span class="font-medium">kernel</span> used in many CAD systems like AutoCAD and SolidWorks.
+                        File extension: <code class="bg-gray-200 px-1 rounded">.sat</code> / <code class="bg-gray-200 px-1 rounded">.sab</code>
+                    </p>
+                    <p class="mt-2">
+                        <strong>Features:</strong> Represents 3D solid models using Boundary Representation (B-Rep). Stores detailed geometric and topological data. Supports complex modeling, boolean operations, and blending.
+                        <br>
+                        <strong>Applications:</strong> Used internally by software for storing and transferring 3D models. Enables compatibility among ACIS-based modeling tools.
+                    </p>
+                </div>
+
+                <!-- DXF -->
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="content-subheading">(d) DXF (Drawing Exchange Format)</h4>
+                    <p>
+                        Full form: <span class="font-medium">Drawing Exchange Format.</span> Developed by Autodesk for data exchange between AutoCAD and other software.
+                        File extension: <code class="bg-gray-200 px-1 rounded">.dxf</code>
+                    </p>
+                    <p class="mt-2">
+                        <strong>Features:</strong> Supports 2D drawing data, annotations, layers, and limited 3D geometry. ASCII or binary format. Maintains line types, dimensions, and blocks during exchange.
+                        <br>
+                        <strong>Applications:</strong> Commonly used for laser cutting, CNC machining, and 2D drafting. Compatible with most CAM and graphics software.
+                    </p>
+                </div>
+
+                <!-- STL -->
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="content-subheading">(e) STL (Stereolithography File Format)</h4>
+                    <p>
+                        Full form: <span class="font-medium">Stereolithography.</span> Developed by 3D Systems for rapid prototyping and 3D printing.
+                        File extension: <code class="bg-gray-200 px-1 rounded">.stl</code>
+                    </p>
+                    <p class="mt-2">
+                        <strong>Features:</strong> Represents 3D surfaces as a collection of triangular facets. Does not contain color, material, or texture information. Lightweight and widely accepted for 3D printing.
+                        <br>
+                        <strong>Applications:</strong> Used for Additive Manufacturing (3D Printing). Common in medical modeling, mechanical parts prototyping, and animation.
+                    </p>
+                    
+                </div>
+            </div>
+        </section>
+        
+        <!-- ============================================== -->
+        <!-- PART 8: Computer-Aided Process Planning (CAPP) -->
+        <!-- Increased mb-10 for better separation -->
+        <!-- ============================================== -->
+        <section id="part8" class="mb-10 pt-10 -mt-10 bg-white p-6 sm:p-8 rounded-xl shadow-2xl border-l-8 border-blue-600">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+                Part 8: Computer-Aided Process Planning (CAPP)
+            </h2>
+            
+            <div class="space-y-6 text-gray-700">
+                <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">What is CAPP?</h3>
+                <p>
+                    Computer-Aided Process Planning (CAPP) is a computerized system used to determine the sequence of manufacturing operations required to convert a raw material into a finished product.
+                </p>
+                <p>
+                    It acts as a bridge between CAD and CAM, meaning:
+                </p>
+                <ul class="list-disc pl-5 ml-4 space-y-1">
+                    <li><strong>CAD</strong> gives the design</li>
+                    <li><strong>CAPP</strong> converts design into manufacturing steps</li>
+                    <li><strong>CAM</strong> uses these steps to generate toolpaths</li>
+                </ul>
+                <p class="mt-4">
+                    The relationship is a smooth workflow: <span class="font-bold text-blue-600">CAD</span> $\rightarrow$ <span class="font-bold text-blue-600">CAPP</span> $\rightarrow$ <span class="font-bold text-blue-600">CAM</span>.
+                </p>
+                
+                
+                <p class="font-semibold mt-4">In simple words, CAPP answers the question — "How should the part be manufactured?"</p>
+                
+                <p><strong>It decides:</strong></p>
+                <ul class="list-disc pl-5 ml-4 space-y-1">
+                    <li>Operation sequence (turning &rarr; drilling &rarr; milling &rarr; finishing)</li>
+                    <li>Machines required</li>
+                    <li>Tools selection</li>
+                    <li>Cutting parameters (speed, feed, depth)</li>
+                    <li>Fixtures & setups</li>
+                    <li>Time estimation</li>
+                </ul>
+                <p>
+                    Thus, CAPP replaces manual process planners with a faster, standardized, intelligent digital method.
+                </p>
+
+                <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Significance of CAPP (Why It Is Important?)</h3>
+                <ol class="content-list space-y-3">
+                    <li>
+                        <strong class="text-blue-600">Standardization of Process Plans:</strong> Ensures uniform quality and removes variation caused by human planners.
+                    </li>
+                    <li>
+                        <strong class="text-blue-600">Reduction in Planning Time:</strong> Manual process planning takes hours, but CAPP generates plans in minutes.
+                    </li>
+                    <li>
+                        <strong class="text-blue-600">Higher Accuracy:</strong> Uses rules, databases, and AI logic, which reduces human mistakes in selecting operations.
+                    </li>
+                    <li>
+                        <strong class="text-blue-600">Better CAD–CAM Integration:</strong> Creates a smooth workflow (CAD &rarr; CAPP &rarr; CAM) and supports CIM (Computer Integrated Manufacturing).
+                    </li>
+                    <li>
+                        <strong class="text-blue-600">Cost Savings:</strong> Achieved through optimized resources, which reduces material waste and machining time.
+                    </li>
+                    <li>
+                        <strong class="text-blue-600">Improved Productivity:</strong> Quick generation of routing sheets ensures proper machine utilization.
+                    </li>
+                    <li>
+                        <strong class="text-blue-600">Retention of Expert Knowledge:</strong> Stores the knowledge of senior planners, preventing the loss of valuable experience.
+                    </li>
+                </ol>
+
+                <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Architecture of a CAPP System</h3>
+                <p>A CAPP system typically has four major components:</p>
+                
+                <div class="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <div class="border-b pb-2">
+                        <h4 class="content-subheading">1. Input Module</h4>
+                        <ul class="list-disc pl-5 ml-4 text-sm">
+                            <li>Accepts CAD model</li>
+                            <li>Extracts features (holes, pockets, slots)</li>
+                            <li>Reads material, tolerances, finish requirements</li>
+                        </ul>
+                    </div>
+
+                    <div class="border-b pb-2">
+                        <h4 class="content-subheading">2. Database / Knowledge Base</h4>
+                        <p class="font-medium text-sm">This is the heart of the system. Stores:</p>
+                        <ul class="list-disc pl-5 ml-4 text-sm">
+                            <li>Machine tools, Cutting tools, Speeds & feeds</li>
+                            <li>Fixtures and jigs</li>
+                            <li>Standard process sheets</li>
+                            <li>Expert rules</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-b pb-2">
+                        <h4 class="content-subheading">3. Decision-Making Engine</h4>
+                        <p class="font-medium text-sm">Applies rules, logic, AI, or algorithms to:</p>
+                        <ul class="list-disc pl-5 ml-4 text-sm">
+                            <li>Select machine, Choose tools</li>
+                            <li>Decide operation sequence</li>
+                            <li>Assign parameters</li>
+                        </ul>
+                        <p class="text-sm italic mt-1">Uses <span class="font-bold">feature recognition</span> to understand the shape of the part.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="content-subheading">4. Output Module</h4>
+                        <p class="font-medium text-sm">Produces:</p>
+                        <ul class="list-disc pl-5 ml-4 text-sm">
+                            <li>Operation sheet, Process plan</li>
+                            <li>Tools list, Machine sequence</li>
+                            <li>Time estimate, Routing sheet</li>
+                        </ul>
+                        <p class="text-sm italic mt-1">Often exported directly to CAM.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

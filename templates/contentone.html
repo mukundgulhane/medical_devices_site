@@ -1,0 +1,693 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 Content - CAD/CAM Concepts</title>
+    
+    <!-- Load Inter Font from Google Fonts for correct display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9; /* Light background for professional feel */
+            scroll-behavior: smooth; /* Smooth scrolling for jump links */
+        }
+        /* Custom styles for better readability of the technical content blocks */
+        .content-block {
+            background-color: #ffffff;
+            padding: 2.5rem; /* Larger padding */
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Soft shadow */
+            margin-bottom: 2rem;
+            transition: transform 0.2s;
+        }
+        .content-block:hover {
+            transform: translateY(-2px);
+        }
+        .content-section h3 {
+            border-left: 4px solid #3b82f6; /* Accent border for subheadings */
+            padding-left: 0.75rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* semibold */
+            color: #1f2937;
+        }
+        .text-lead {
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .definition {
+            font-style: italic;
+            color: #4b5563;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        /* Custom styling for the sticky quick-links bar */
+        .quick-links {
+            position: sticky;
+            top: 4rem; /* Below the main header (h-16) */
+            z-index: 5;
+            padding: 0.5rem 0;
+            background-color: #e5e7eb; /* Light gray background */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .quick-links .link-container {
+            /* Ensures links stay on one line and allows horizontal scrolling on small screens */
+            display: flex;
+            gap: 0.5rem; /* Space between links */
+            overflow-x: auto;
+            white-space: nowrap; 
+        }
+        .quick-links a {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 600;
+            transition: all 0.2s;
+            flex-shrink: 0; /* Prevents links from shrinking on mobile */
+        }
+        .quick-links a:hover {
+            background-color: #d1d5db; /* Darker gray on hover */
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e40af', // Darker Blue
+                        'secondary': '#3b82f6', // Lighter Blue
+                        'accent': '#f59e0b', // Amber/Orange for highlights
+                    }
+                }
+            }
+        }
+
+        // JavaScript function to handle the Back button
+        function goBack() {
+            window.history.back();
+        }
+
+        // JavaScript function to toggle the Hamburger Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 
+        1. MAIN NAVIGATION BAR
+    -->
+    <header class="bg-primary text-white shadow-lg sticky top-0 z-10 h-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <!-- LEFT SIDE: Back Button and Home Link -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="goBack()" class="p-2 rounded-lg hover:bg-secondary/50 transition duration-150 flex items-center space-x-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        <span class="hidden md:inline text-sm font-medium">Back</span>
+                    </button>
+                    <a href="{{ url_for('firstpage') }}"  class="hidden md:block px-3 py-2 text-sm font-medium rounded-md hover:bg-secondary transition duration-150">Home</a>
+                </div>
+                
+                <!-- CENTER: Title -->
+                <div class="flex-1 flex justify-center items-center">
+                    <span class="text-xl font-bold tracking-wider hidden sm:block">Module 1: CAD/CAM Core Concepts</span>
+                    <span class="text-lg font-bold tracking-wider sm:hidden">Module 1</span>
+                </div>
+
+                <!-- RIGHT SIDE: Navigation Links & Hamburger Menu -->
+                <div class="flex items-center space-x-2">
+                    <nav class="hidden md:flex space-x-4">
+                        <a href="{{ url_for('secondcontent') }}"  class="px-3 py-2 text-sm font-medium rounded-md hover:bg-secondary transition duration-150">Module 2</a>
+                        <a href="{{ url_for('cadprojects') }}"  class="px-3 py-2 text-sm font-medium rounded-md hover:bg-secondary transition duration-150">CAD Projects</a>
+                    </nav>
+                    <a href="{{ url_for('secondcontent') }}"  class="p-2 rounded-lg hover:bg-secondary/50 transition duration-150 flex items-center space-x-1">
+                        <span class="hidden md:inline text-sm font-medium">Next</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                    <div class="md:hidden">
+                        <button id="menu-button" onclick="toggleMenu()" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hamburger Content) - Initially Hidden -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-primary/90">
+                <a href="{{ url_for('frontpage') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-secondary transition duration-150">Subject</a>
+                <a href="{{ url_for('firstpage') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-secondary transition duration-150">Home</a>
+                <a href="{{ url_for('contentone') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-secondary">Module 1 (Current)</a>
+                <a href="{{ url_for('secondcontent') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-secondary transition duration-150">Module 2</a>
+                <a href="{{ url_for('cadprojects') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-secondary transition duration-150">Cad Projects</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- QUICK JUMP LINKS BAR - Optimized for single line and mobile -->
+    <nav class="quick-links">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="link-container">
+                <a href="#part-1" class="text-primary hover:text-white hover:bg-primary/80">Part 1: CAD/CAM Intro</a>
+                <a href="#part-2" class="text-primary hover:text-white hover:bg-primary/80">Part 2: PLC & GUI</a>
+                <a href="#part-3" class="text-primary hover:text-white hover:bg-primary/80">Part 3: 3D Modeling</a>
+                <a href="#part-4" class="text-primary hover:text-white hover:bg-primary/80">Part 4: Assembly & Mates</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 
+         <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- BLOCK 1: Introduction and Components of CAD/CAM -->
+        <div id="part-1" class="content-block">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">Part 1 – Introduction and Components of CAD/CAM</h2>
+
+            <div class="content-section">
+                <h3 class="mt-4">Introduction to CAD</h3>
+                <p class="mt-2 definition text-gray-700">
+                    CAD (Computer-Aided Design) is the use of computer systems to assist in the creation, modification, analysis, or optimization of a design. [Image of 3D CAD modeling software interface]
+                    It allows engineers and designers to create 2D drawings or 3D models accurately, quickly, and efficiently. 
+                </p>
+                <p class="mt-1 text-sm text-gray-500">
+                    Example: Designing machine parts, automobiles, medical devices, or electronics using software like SolidWorks, AutoCAD, CATIA, Fusion 360, etc.
+                </p>
+                
+                <p class="text-lead">Functions of CAD:</p>
+                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                    <li>2D drafting and 3D modeling</li>
+                    <li>Design visualization (wireframe, surface, solid)</li>
+                    <li>Dimensioning and tolerance analysis</li>
+                    <li>Design optimization and documentation</li>
+                </ul>
+
+                <p class="text-lead">Advantages of CAD:</p>
+                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                    <li>Increased accuracy and productivity</li>
+                    <li>Easy modification of design</li>
+                    <li>Reduced design time</li>
+                    <li>Enhanced visualization and simulation</li>
+                    <li>Easy documentation and data storage</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h3 class="mt-4">Introduction to CAM</h3>
+                <p class="mt-2 definition text-gray-700">
+                    CAM (Computer-Aided Manufacturing) uses computer software to control and automate manufacturing machines such as CNC, milling, or turning machines. [Image of a CNC machine cutting metal]
+                    It converts the CAD model into manufacturing instructions (tool paths, cutting speeds, etc.).
+                </p>
+
+                <p class="text-lead">Functions of CAM:</p>
+                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                    <li>Toolpath generation and optimization</li>
+                    <li>CNC machine control (G-code generation)</li>
+                    <li>Material removal simulation</li>
+                    <li>Process planning and machining sequence</li>
+                </ul>
+
+                <p class="text-lead">Advantages of CAM:</p>
+                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                    <li>Improves manufacturing accuracy and efficiency</li>
+                    <li>Reduces manual errors and machining time</li>
+                    <li>Enhances consistency and surface finish</li>
+                    <li>Allows automation and integration with CAD</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h3 class="mt-4">Key Differences Between CAD and CAM</h3>
+                <div class="table-container">
+                    <table class="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Basis of Comparison</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CAD (Computer-Aided Design)</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CAM (Computer-Aided Manufacturing)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Full Form</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Computer-Aided Design</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Computer-Aided Manufacturing</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Purpose</td><td class="px-6 py-4 text-sm text-gray-700">Used to design and model products digitally.</td><td class="px-6 py-4 text-sm text-gray-700">Used to control machines and automate manufacturing.</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Main Function</td><td class="px-6 py-4 text-sm text-gray-700">Creation, modification, and analysis of design geometry.</td><td class="px-6 py-4 text-sm text-gray-700">Converts design into manufacturing instructions.</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Output Data</td><td class="px-6 py-4 text-sm text-gray-700">Engineering drawings and 3D models.</td><td class="px-6 py-4 text-sm text-gray-700">CNC codes, tool paths, and process plans.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-gray-700 text-sm">CAD and CAM are often integrated to form a continuous process, maximizing efficiency from concept to production.</p>
+            </div>
+        </div>
+    
+
+        <!-- BLOCK 2: Product Life Cycle (PLC) -->
+        <div id="part-2" class="content-block">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">Part 2 – Product Life Cycle (PLC) & GUI</h2>
+           
+
+    <p>The Product Life Cycle (PLC) is the sequence of stages a product undergoes from its initial conception to its withdrawal from the market or end-of-life. It provides a framework for understanding how products are conceived, designed, manufactured, marketed, utilized, and eventually retired or recycled. In the context of CAD/CAM and modern engineering, the PLC is not only about sales and profits over time but also about the technical lifecycle of a product, starting from idea generation to final disposal.</p>
+
+    <p>Effective management of the PLC helps organizations minimize design costs, accelerate product development, maintain quality standards, and respond to market demands quickly. Tools such as Computer-Aided Design (CAD) and Computer-Aided Manufacturing (CAM) play a critical role in this cycle, as they enable rapid prototyping, accurate simulations, automated machining, and process optimization.</p>
+
+    <p>Thus, the PLC serves as a bridge between engineering design, manufacturing processes, and business strategies, ensuring that products remain competitive, cost-effective, and sustainable throughout their lifespan.</p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-4">Broad Processes in Product Life Cycle</h2>
+    <ol class="list-decimal list-inside ml-5">
+        <li>The Design Process</li>
+        <li>The CAD Process (Computer-Aided Design)</li>
+        <li>The CAM Process (Computer-Aided Manufacturing / Manufacturing Process)</li>
+    </ol>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3">1. The Design Process (Conceptual Stage)</h2>
+    <ul class="list-disc list-inside ml-5">
+        <li><strong>Design Needs:</strong>
+            <ul class="list-disc ml-5">
+                <li>Starts with identifying customer requirements, market demand, or technical problems.</li>
+                <li>Example: A company wants to design a new medical device like a microneedle patch.</li>
+            </ul>
+        </li>
+        <li><strong>Design Definitions, Specifications, and Requirements:</strong>
+            <ul class="list-disc ml-5">
+                <li>Translate customer needs into engineering requirements (size, material, performance, safety).</li>
+                <li>Regulatory standards are also considered here.</li>
+            </ul>
+        </li>
+        <li><strong>Feasibility Study:</strong>
+            <ul class="list-disc ml-5">
+                <li>Collect data, evaluate cost, safety, and technical feasibility.</li>
+                <li>Helps decide whether to proceed with the product.</li>
+            </ul>
+        </li>
+    </ul>
+    <p>This stage is about <strong>Synthesis</strong> → converting an idea into a structured problem definition.</p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3">2. The CAD Process (Computer-Aided Design)</h2>
+    <ul class="list-disc list-inside ml-5">
+        <li><strong>Design Conceptualization:</strong>
+            <ul class="list-disc ml-5">
+                <li>Initial sketches and 3D models are created.</li>
+                <li>Tools: Sketching, solid modeling, assembly modeling.</li>
+            </ul>
+        </li>
+        <li><strong>Design Modeling and Simulation:</strong>
+            <ul class="list-disc ml-5">
+                <li>Detailed CAD models are built.</li>
+                <li>Simulations: stress, thermal, fluid flow, motion analysis.</li>
+                <li>Prevents costly physical prototyping at an early stage.</li>
+            </ul>
+        </li>
+        <li><strong>Design Analysis:</strong>
+            <ul class="list-disc ml-5">
+                <li>Evaluate if design meets requirements (strength, efficiency, safety).</li>
+                <li>Failure Mode and Effects Analysis (FMEA) may be applied.</li>
+            </ul>
+        </li>
+        <li><strong>Design Optimization:</strong>
+            <ul class="list-disc ml-5">
+                <li>Modify parameters (thickness, material, geometry) to improve performance and reduce cost.</li>
+            </ul>
+        </li>
+        <li><strong>Design Evaluation & Documentation:</strong>
+            <ul class="list-disc ml-5">
+                <li>Final approval of design.</li>
+                <li>Engineering drawings, 2D projections, GD&T.</li>
+                <li>Documentation is prepared for manufacturing.</li>
+            </ul>
+        </li>
+    </ul>
+    <p>This stage is about <strong>Analysis and Refinement</strong> → CAD ensures the product is accurate, reliable, and ready for production.</p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3">3. The CAM Process (Computer-Aided Manufacturing)</h2>
+    <ul class="list-disc list-inside ml-5">
+        <li><strong>Process Planning:</strong> Decide machining method, tolerances, tool paths, cutting parameters.</li>
+        <li><strong>Order Materials:</strong> Select raw materials (metals, polymers, ceramics).</li>
+        <li><strong>NC/CNC Programming:</strong> Convert CAD model to machine-readable code (G-code) for automated execution.</li>
+        <li><strong>Design & Procurement of Tools:</strong> Create special jigs, fixtures, molds if needed.</li>
+        <li><strong>Production:</strong> Actual manufacturing with automated processes to reduce errors.</li>
+        <li><strong>Quality Control (QC):</strong> Inspection using CMMs and digital metrology.</li>
+        <li><strong>Packaging & Shipping:</strong> Final stage of product delivery.</li>
+    </ul>
+    <p>This stage is about <strong>Realization</strong> → CAM bridges digital design with physical manufacturing.</p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3">Integration with Marketing</h2>
+    <ul class="list-disc list-inside ml-5">
+        <li>Marketing ensures product launch, distribution, and customer feedback.</li>
+        <li>Ties back to the PLC curve: Introduction → Growth → Maturity → Decline.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3">Advantages of CAD/CAM in PLC</h2>
+    <ul class="list-disc list-inside ml-5">
+        <li>Faster product development</li>
+        <li>Better collaboration between design and manufacturing</li>
+        <li>Cost-effective prototyping</li>
+        <li>High-quality and consistent production</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3">Scope and Future of CAD/CAM</h2>
+    <ul class="list-disc list-inside ml-5">
+        <li>Mechanical design and manufacturing</li>
+        <li>Automotive and aerospace</li>
+        <li>Biomedical and medical device design</li>
+        <li>Civil and architectural modeling</li>
+        <li>Electrical and electronic design</li>
+        <li>Industrial design and product styling</li>
+    </ul>
+    <p><strong>Future scope:</strong></p>
+    <ul class="list-disc list-inside ml-5">
+        <li>AI Integration</li>
+        <li>Additive Manufacturing (3D printing)</li>
+        <li>IoT-enabled design & production</li>
+        <li>Cloud-based collaborative CAD platforms</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3">GUI and Menu of a CAD/CAM Software</h2>
+    <h3 class="text-xl font-semibold mt-3 mb-2">Graphical User Interface (GUI)</h3>
+    <ul class="list-disc list-inside ml-5">
+        <li>Menu bar: File, Edit, View, Tools, etc.</li>
+        <li>Toolbars: Quick access to drawing/modeling tools</li>
+        <li>Command window: Enter or modify commands manually</li>
+        <li>Graphics area: Workspace for drawing or 3D modeling</li>
+        <li>Feature Manager Tree: Lists model features and history</li>
+        <li>Status bar: Displays coordinate positions, units, etc.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-3 mb-2">Menu Structure (Example: SolidWorks)</h3>
+    <table class="w-full border border-gray-300 mb-6">
+        <tr class="bg-blue-600 text-white">
+            <th class="px-3 py-2">Menu Option</th>
+            <th class="px-3 py-2">Function</th>
+        </tr>
+        <tr>
+            <td class="px-3 py-2">File</td>
+            <td class="px-3 py-2">New, Open, Save, Print, Export</td>
+        </tr>
+        <tr>
+            <td class="px-3 py-2">Edit</td>
+            <td class="px-3 py-2">Undo, Redo, Copy, Paste</td>
+        </tr>
+        <tr>
+            <td class="px-3 py-2">View</td>
+            <td class="px-3 py-2">Zoom, Rotate, Pan, Display styles</td>
+        </tr>
+        <tr>
+            <td class="px-3 py-2">Insert</td>
+            <td class="px-3 py-2">Add features, components, or sketches</td>
+        </tr>
+        <tr>
+            <td class="px-3 py-2">Tools</td>
+            <td class="px-3 py-2">Measurement, Mass properties, Options</td>
+        </tr>
+        <tr>
+            <td class="px-3 py-2">Window</td>
+            <td class="px-3 py-2">Manage multiple files or tabs</td>
+        </tr>
+        <tr>
+            <td class="px-3 py-2">Help</td>
+            <td class="px-3 py-2">Access tutorials, documentation</td>
+        </tr>
+    </table>
+</div>
+
+            
+                <p class="mt-4 text-gray-700 text-sm">CAD and CAM are often integrated to form a continuous process, maximizing efficiency from concept to production.</p>
+            
+        </div>
+        </div>
+
+        <!-- BLOCK 3: 3D Modelling and Viewing -->
+        <div id="part-3" class="content-block">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">Part 3 – 3D Modelling and Viewing</h2>
+
+            <div class="content-section">
+                <h3 class="mt-4">3D Modeling Fundamentals</h3>
+                <p class="mt-2 definition text-gray-700">
+                    3D Modeling is the process of creating a mathematical representation of a three-dimensional object using CAD software.
+                </p>
+                <p class="text-lead">3D Modeling Entities:</p>
+                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                    <li><strong class="text-gray-800">Entities:</strong> Basic geometric shapes (Points, Lines, Arcs, Circles, Planes, Solids).</li>
+                    <li><strong class="text-gray-800">Features:</strong> Operations applied to sketches to form 3D models.</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h3 class="mt-4">3D Modeling Features and Examples</h3>
+                <div class="table-container">
+                    <table class="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Operation</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Example</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Base Feature</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">First feature defining main shape</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Extrude, Revolve</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Cut</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Removes material from the part</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Drilling holes, making slots</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Fillet/Chamfer</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Rounds or bevels edges for safety/aesthetics</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Rounding corners</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Pattern</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Repeats features (linear/circular)</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Arrays of bolt holes, gear teeth</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h3 class="mt-4">Modeling Strategies</h3>
+                <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                    <li><strong class="text-gray-800">Sketch-Based Modeling:</strong> Create a 2D sketch, constrain dimensions/relations, then use features like Extrude or Revolve to form a 3D solid.</li>
+                    <li><strong class="text-gray-800">Feature-Based Modeling:</strong> Building a solid feature by feature (e.g., Base feature &rarr; Hole &rarr; Fillet).</li>
+                    <li><strong class="text-gray-800">Parametric Modeling:</strong> Designs controlled by parameters (dimensions and relations) that automatically update linked features upon change.</li>
+                    <li><strong class="text-gray-800">Boolean Operations:</strong> Operations (Union, Subtract, Intersect) used to combine or modify solids.</li>
+                </ul>
+            </div>
+        </div>
+
+       <!-- BLOCK 4: Assembly Modelling -->
+
+<div id="part-4" class="content-block">
+    <h1 class="text-3xl font-bold text-center mb-6">Assembly Modelling</h1>
+
+<p>Assembly modelling in SolidWorks is the process of combining multiple 3D parts (components) into a single environment to represent how they physically fit, interact, and move together as a real product or mechanism.</p>
+
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Visualize the complete product before manufacturing.</li>
+    <li>File extension for assemblies: <strong>.SLDASM</strong>.</li>
+    <li>Individual components are <strong>.SLDPRT</strong> files.</li>
+    <li>Assemblies can contain sub-assemblies (groups of components forming part of a larger model).</li>
+</ul>
+
+<h2 class="text-2xl font-semibold mt-6 mb-3">Purpose of Assembly Modelling</h2>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Check fit and alignment of parts.</li>
+    <li>Simulate motion or mechanical relationships.</li>
+    <li>Detect interference or collisions between parts.</li>
+    <li>Prepare exploded views and Bill of Materials (BOM).</li>
+    <li>Create a complete virtual prototype before production.</li>
+</ul>
+
+<h2 class="text-2xl font-semibold mt-6 mb-3">Key Features in SolidWorks</h2>
+<ol class="list-decimal list-inside ml-5 mb-4">
+    <li><strong>Mates:</strong> Define geometric relationships and constraints.
+        <ul class="list-disc ml-5">
+            <li>Examples: Coincident, Concentric, Parallel, Tangent, Distance, Angle.</li>
+            <li>Determine positioning and movement relative to other parts.</li>
+        </ul>
+    </li>
+    <li><strong>Sub-Assemblies:</strong>
+        <ul class="list-disc ml-5">
+            <li>A group of parts acting as a single unit in a larger assembly.</li>
+            <li>Example: Car wheel assembly (rim, tire, bolts).</li>
+        </ul>
+    </li>
+    <li><strong>Motion Simulation:</strong> Simulates movements under forces or constraints.</li>
+    <li><strong>Interference Detection:</strong> Finds overlapping or colliding parts.</li>
+    <li><strong>Exploded Views:</strong> Separates parts visually for manuals or presentations.</li>
+</ol>
+
+<h2 class="text-2xl font-semibold mt-6 mb-3">Assembly Modelling Approaches</h2>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Bottom-Up Assembly Approach</li>
+    <li>Top-Down Assembly Approach</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-4 mb-2">1. Bottom-Up Assembly Modelling</h3>
+<p><strong>Definition:</strong> Parts are created independently and then inserted into an assembly (.SLDASM) with mates.</p>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Create all parts as .SLDPRT files.</li>
+    <li>Open a new assembly file (.SLDASM).</li>
+    <li>Insert components: <em>Insert → Component → Existing Part/Assembly</em>.</li>
+    <li>Apply mates to position and constrain parts.</li>
+    <li>Test fit and motion to verify alignment.</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>High reusability</li>
+    <li>Simpler management</li>
+    <li>Standardization</li>
+    <li>Low risk of reference errors</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Difficult design changes</li>
+    <li>No automatic adaptation</li>
+    <li>More planning required</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-4 mb-2">2. Top-Down Assembly Modelling</h3>
+<p><strong>Definition:</strong> Assembly created first; parts are made in-context referencing other parts' geometry.</p>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Start a new assembly file.</li>
+    <li>Create a layout sketch or insert a base component.</li>
+    <li>Insert new parts in assembly: <em>Insert → Component → New Part</em>.</li>
+    <li>Reference existing geometry for in-context sketches.</li>
+    <li>Changes in one part update dependent parts automatically.</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Perfect fit</li>
+    <li>Faster modifications</li>
+    <li>Efficient for complex designs</li>
+    <li>Visual design intent</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Complex file management</li>
+    <li>Limited reusability</li>
+    <li>Performance issues</li>
+    <li>Dependency problems</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-4 mb-2">Comparison: Bottom-Up vs Top-Down</h3>
+<div class="overflow-x-auto mb-6">
+    <table class="w-full border border-gray-300 text-sm">
+        <thead class="bg-blue-600 text-white">
+            <tr>
+                <th class="px-3 py-2">Feature</th>
+                <th class="px-3 py-2">Bottom-Up</th>
+                <th class="px-3 py-2">Top-Down</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+                <td class="px-3 py-2">Starting Point</td>
+                <td class="px-3 py-2">Create parts first, then assemble</td>
+                <td class="px-3 py-2">Start with assembly, create parts inside</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Part Dependency</td>
+                <td class="px-3 py-2">Independent</td>
+                <td class="px-3 py-2">Dependent (in-context)</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Reusability</td>
+                <td class="px-3 py-2">High</td>
+                <td class="px-3 py-2">Low</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Flexibility</td>
+                <td class="px-3 py-2">Limited after assembly</td>
+                <td class="px-3 py-2">High; updates propagate</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Best For</td>
+                <td class="px-3 py-2">Standardized, modular designs</td>
+                <td class="px-3 py-2">Complex, custom-fit designs</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2 class="text-2xl font-semibold mt-6 mb-3">Mates in SolidWorks</h2>
+<p>Mates define geometric relationships to assemble components correctly and simulate motion.</p>
+
+<ul class="list-disc list-inside ml-5 mb-4">
+    <li>Fix position and orientation of components.</li>
+    <li>Simulate mechanical relationships.</li>
+    <li>Control motion between components.</li>
+    <li>Ensure correct assembly and avoid interference.</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-4 mb-2">Types of Mating Conditions</h3>
+<ol class="list-decimal list-inside ml-5 mb-4">
+    <li>Standard Mates</li>
+    <li>Advanced Mates</li>
+    <li>Mechanical Mates</li>
+</ol>
+
+<h4 class="text-lg font-semibold mt-3 mb-2">1. Standard Mates</h4>
+<div class="overflow-x-auto mb-6">
+    <table class="w-full border border-gray-300 text-sm">
+        <thead class="bg-blue-600 text-white">
+            <tr>
+                <th class="px-3 py-2">Mate Type</th>
+                <th class="px-3 py-2">Description</th>
+                <th class="px-3 py-2">Example Use</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+                <td class="px-3 py-2">Coincident</td>
+                <td class="px-3 py-2">Two faces, edges, or points lie on the same plane or line</td>
+                <td class="px-3 py-2">Bottom face of bolt head on plate surface</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Parallel</td>
+                <td class="px-3 py-2">Two planes, faces, or edges parallel</td>
+                <td class="px-3 py-2">Two support plates parallel</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Perpendicular</td>
+                <td class="px-3 py-2">Two entities at 90° to each other</td>
+                <td class="px-3 py-2">Bracket perpendicular to base</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Concentric</td>
+                <td class="px-3 py-2">Align axes of cylindrical/conical/spherical surfaces</td>
+                <td class="px-3 py-2">Bolt aligned with a hole or shaft</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Distance</td>
+                <td class="px-3 py-2">Sets specific distance between faces, edges, or planes</td>
+                <td class="px-3 py-2">10mm gap between plates</td>
+            </tr>
+            <tr>
+                <td class="px-3 py-2">Angle</td>
+                <td class="px-3 py-2">Sets angular relation between two entities</td>
+                <td class="px-3 py-2">Lever arm at 30° to base</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+        <p class="text-sm">&copy; 2025 CAD/CAM Concepts Module 1. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

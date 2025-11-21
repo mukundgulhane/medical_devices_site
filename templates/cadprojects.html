@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAD Projects Selector and Gallery</title>
+    <!-- Load Tailwind CSS from CDN for professional, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Set a modern, clean font */
+        html { 
+            font-family: 'Inter', sans-serif; 
+            scroll-behavior: smooth;
+        }
+        
+        /* Utility class for white links against the blue background */
+        .nav-link-white {
+            @apply px-3 py-2 rounded-lg text-sm font-medium text-white hover:bg-blue-500 transition duration-150 ease-in-out;
+        }
+        
+        /* Style for the icon buttons (Back/Next) */
+        .nav-icon-btn {
+            @apply p-2 rounded-full text-white hover:bg-blue-500 focus:outline-none transition duration-150;
+        }
+
+        /* Styling for the main content area to accommodate fixed primary nav (h-16 = 4rem) */
+        .main-content {
+            padding-top: 4rem; 
+        }
+
+        /* Specific styling for the professional dropdown menu button (Neutral White/Grey) */
+        .dropdown-button-neutral {
+            /* Clean white background, prominent shadow, and blue focus/hover */
+            @apply w-full text-xl font-bold text-gray-800 bg-white py-4 px-6 rounded-xl shadow-xl border border-gray-300 transition duration-300 flex justify-between items-center ring-4 ring-transparent hover:border-blue-500;
+        }
+        .dropdown-button-neutral:focus {
+            @apply ring-blue-500 ring-opacity-50; /* Focus ring for accessibility */
+        }
+        
+        /* Container for the actual dropdown list (wide, clean, and pops out) */
+        .dropdown-list-container {
+            /* Full width within the max-w-4xl container */
+            @apply absolute top-full mt-2 w-full bg-white rounded-xl shadow-2xl border border-blue-200 divide-y divide-gray-100 p-2 max-h-96 overflow-y-auto;
+        }
+        .dropdown-item {
+            /* Enhanced hover state and structure for list items */
+            @apply flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-800 cursor-pointer transition duration-150 rounded-lg space-x-3;
+        }
+        .dropdown-item-text {
+            @apply font-semibold;
+        }
+        .project-details {
+            /* General project container styling */
+            @apply bg-white p-6 md:p-10 rounded-xl shadow-2xl mt-8 border-t-8 border-blue-500;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#2563eb', /* Blue 600 */
+                    }
+                }
+            }
+        }
+
+        // Project data structure with Icons (using inline SVG for cleanliness)
+        const projects = [
+            { id: 'part-modeling', name: '1. Stent', icon: '<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>' },
+            { id: 'simulation', name: '2. Hip Implant' },
+            { id: 'drafting', name: '3. Technical Drafting (ANSI/ISO Blueprint with GD&T)', icon: '<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10h2a2 2 0 002-2V9a2 2 0 00-2-2h-2m2 4h-2"></path></svg>' },
+            { id: 'cam-toolpath', name: '4. CAM Toolpath Generation (2D/3D Milling & G-Code)', icon: '<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10m0 0h16v-4m-16 4l8-8m0 0l8-8"></path></svg>' }
+        ];
+
+        // JavaScript to toggle the mobile hamburger menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Function for the working 'Back' button (uses browser history)
+        function goBack() {
+            window.history.back();
+        }
+
+        // Function to toggle the project dropdown menu
+        function toggleProjectDropdown() {
+            const dropdown = document.getElementById('project-dropdown-list');
+            dropdown.classList.toggle('hidden');
+            
+            // Toggle the arrow icon (up/down)
+            const icon = document.getElementById('dropdown-arrow');
+            if (!dropdown.classList.contains('hidden')) {
+                icon.classList.remove('rotate-0');
+                icon.classList.add('rotate-180');
+            } else {
+                icon.classList.remove('rotate-180');
+                icon.classList.add('rotate-0');
+            }
+        }
+
+        // Function to show a specific project and hide others
+        function selectProject(projectId, projectName) {
+            // Hide the dropdown list
+            const dropdown = document.getElementById('project-dropdown-list');
+            dropdown.classList.add('hidden');
+            
+            // Reset the arrow icon state
+            document.getElementById('dropdown-arrow').classList.remove('rotate-180');
+            document.getElementById('dropdown-arrow').classList.add('rotate-0');
+
+
+            // Update the visible button text
+            document.getElementById('selected-project-name').textContent = projectName;
+
+            // Loop through all project containers and hide them
+            const projectContainers = document.querySelectorAll('.project-details');
+            projectContainers.forEach(container => {
+                container.classList.add('hidden');
+            });
+
+            // Show only the selected project container
+            const selectedContainer = document.getElementById(projectId);
+            if (selectedContainer) {
+                selectedContainer.classList.remove('hidden');
+            }
+
+            // Scroll to the content area
+            const detailContainer = document.getElementById('detail-area');
+            if (detailContainer) {
+                // Smooth scroll to the content area after selection
+                detailContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            window.location.hash = projectId;
+        }
+
+        // Initial setup function to run on page load
+        window.onload = function() {
+            // Find the project to display initially (check URL hash first, otherwise default to the first one)
+            let initialProjectId = window.location.hash ? window.location.hash.substring(1) : projects[0].id;
+            
+            // Validate that the hash ID is a known project ID
+            const initialProject = projects.find(p => p.id === initialProjectId) || projects[0];
+
+            // Set the initial state
+            selectProject(initialProject.id, initialProject.name);
+            
+            // Populate dropdown menu items dynamically
+            const dropdownList = document.getElementById('project-dropdown-list');
+            dropdownList.innerHTML = projects.map(project => `
+                <a onclick="selectProject('${project.id}', '${project.name}')" class="dropdown-item">
+                    ${project.icon}
+                    <span class="dropdown-item-text">${project.name}</span>
+                </a>
+            `).join('');
+            
+            // Close dropdown if user clicks outside of it
+            document.addEventListener('click', (event) => {
+                const dropdownArea = document.querySelector('.dropdown-container-wrapper');
+                
+                // Check if the click occurred outside the entire dropdown area
+                if (dropdownArea && !dropdownArea.contains(event.target)) {
+                    document.getElementById('project-dropdown-list').classList.add('hidden');
+                    document.getElementById('dropdown-arrow').classList.remove('rotate-180');
+                    document.getElementById('dropdown-arrow').classList.add('rotate-0');
+                }
+            });
+        };
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen main-content">
+
+    <!-- 1. PRIMARY Navigation Bar (Fixed Top, Solid Blue) -->
+    <nav class="fixed top-0 left-0 right-0 bg-blue-600 shadow-xl z-50 h-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex justify-between h-full">
+
+                <!-- Left Section: Back Button -->
+                <div class="flex items-center space-x-3">
+                    <!-- Back Button (Top Left) -->
+                    <button onclick="goBack()" class="nav-icon-btn" aria-label="Go Back to Previous Page">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    </button>
+                </div>
+
+                <!-- Center/Right Section: Nav Links and Home Icon -->
+                <div class="flex items-center space-x-4">
+                    <!-- Desktop Menu Links (Modules 1 & 2) -->
+                    <div class="hidden md:flex md:items-center md:space-x-2">
+                        <a href="{{ url_for('firstpage') }}" class="nav-link-white">Module 1</a>
+                        <a href="{{ url_for('secondcontent') }}" class="nav-link-white">Module 2</a>
+                    </div>
+                    
+                    <!-- Home Icon (Symbol) -->
+                    <a href="{{ url_for('firstpage') }}" class="nav-icon-btn bg-blue-700 hover:bg-blue-800" aria-label="Go to Home Page">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-2-2m0 0l-7-7m7 7v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    </a>
+
+                    <!-- Hamburger Button (Mobile) -->
+                    <button onclick="toggleMobileMenu()" class="nav-icon-btn md:hidden" aria-label="Toggle Navigation Menu">
+                        <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-inner">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ url_for('firstpage') }}" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100">Module 1</a>
+                <a href="{{ url_for('secondcontent') }}" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100">Module 2</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 text-center">
+            CAD/CAM Project Portfolio
+        </h1>
+        <p class="text-lg text-gray-700 mb-8 text-center">
+            Use the professional selector below to navigate between detailed CAD/CAM project examples.
+        </p>
+
+        <!-- Dynamic Project Dropdown Menu (REDESIGNED: Neutral, Distinct Bar) -->
+        <div class="bg-gray-100 p-4 rounded-xl shadow-lg border-b-4 border-gray-300 mb-8 dropdown-container-wrapper">
+            <div class="relative w-full mx-auto z-30">
+                <button id="dropdown-button" onclick="toggleProjectDropdown()" class="dropdown-button-neutral" aria-expanded="false" aria-controls="project-dropdown-list">
+                    <span id="selected-project-name" class="truncate">1. Complex Part Modeling (Advanced Features)</span>
+                    <svg id="dropdown-arrow" class="w-6 h-6 ml-4 text-blue-600 transform transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+
+                <!-- Dropdown List Container (Populated by JS on load) -->
+                <div id="project-dropdown-list" class="hidden dropdown-list-container">
+                    <!-- Items are populated here by the onload script -->
+                </div>
+            </div>
+        </div>
+
+       <!-- Project 1: Complex Part Modeling -->
+<section id="part-modeling" class="project-details hidden">
+    <h2 class="text-3xl font-bold text-gray-900 mb-4 flex items-center">
+        <svg class="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+        </svg>
+        1. Complex Part Modeling
+    </h2>
+    <p class="text-gray-700 mb-6 border-b pb-4">
+        This project focuses on creating highly detailed, single components using advanced feature-based and surface modeling techniques required for precision machining.
+    </p>
+    
+    <!-- Embedded YouTube Video -->
+    <div class="my-6 w-full rounded-xl shadow-inner flex items-center justify-center aspect-video max-w-full">
+        <iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/mjK9vHf9M5A" 
+            title="Complex Part Modeling" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+    </div>
+    
+    <!-- Core Objectives & Skills -->
+    <div class="grid md:grid-cols-2 gap-6 mt-8">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Core Objectives:</h3>
+            <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                <li>Mastering advanced sketching and constraint application.</li>
+                <li>Utilizing complex features like Lofts, Sweeps, and boundary surfaces.</li>
+                <li>Applying draft, fillets, and shells for manufacturability.</li>
+                <li>Parametric modeling for easy design changes.</li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Skills Demonstrated:</h3>
+            <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                <li>3D Sketching and multi-plane feature creation.</li>
+                <li>Tolerances and surface finish specification (basic GD&T).</li>
+                <li>Mass property calculation and material assignment.</li>
+                <li>Design validation using feature analysis tools.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Project 2: Hip Implant -->
+<section id="simulation" class="project-details hidden">
+    <h2 class="text-3xl font-bold text-gray-900 mb-4 flex items-center">
+        <svg class="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        2. Hip Implant - SolidWorks Simulation
+    </h2>
+    <p class="text-gray-700 mb-6 border-b pb-4">
+        This project demonstrates SolidWorks modeling and simulation of a hip implant. It includes assembly, constraint definition, and toolpath verification to ensure manufacturability and safe operation.
+    </p>
+
+    <!-- Embedded YouTube Video -->
+    <div class="my-6 w-full rounded-xl shadow-inner flex items-center justify-center aspect-video max-w-full">
+        <iframe class="w-full h-full rounded-xl" 
+        src="https://www.youtube.com/embed/niovyXgQa5Y" 
+        title="Hip Implant SolidWorks Simulation" 
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+    </div>
+
+    <!-- Core Objectives & Skills -->
+    <div class="grid md:grid-cols-2 gap-6 mt-8">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Core Objectives:</h3>
+            <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                <li>Create detailed 3D CAD model of a hip implant in SolidWorks.</li>
+                <li>Simulate assembly with femur component and verify motion constraints.</li>
+                <li>Analyze toolpaths and machining simulation for safe CNC operation.</li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Skills Demonstrated:</h3>
+            <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                <li>SolidWorks 3D part modeling and assembly techniques.</li>
+                <li>Simulation validation including stress and collision checks.</li>
+                <li>CAM toolpath verification and optimization.</li>
+                <li>Applying manufacturing constraints and GD&T basics.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+
+                <!-- Download link removed as requested -->
+            </section>
+
+            <!-- Project 2: Mechanism Assembly & Mates -->
+            <section id="assembly" class="project-details hidden">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2"></path></svg>
+                    2. Mechanism Assembly & Mates
+                </h2>
+                <p class="text-gray-700 mb-6 border-b pb-4">
+                    This project involves combining multiple individual components into a functioning system (e.g., a simple engine, gear train, or clamp) and defining their motion constraints.
+                </p>
+                <!-- LARGE VIDEO PLACEHOLDER -->
+                <div class="my-6 w-full bg-gray-200 rounded-xl shadow-inner flex items-center justify-center aspect-video max-w-full">
+                    <div class="text-gray-600 font-semibold text-xl p-8 text-center border-2 border-dashed border-gray-400 w-11/12 h-11/12 flex items-center justify-center">
+                        Video Placeholder: Detailed Mechanism/Motion Simulation
+                    </div>
+                </div>
+                <!-- END VIDEO PLACEHOLDER -->
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Core Objectives:</h3>
+                        <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                            <li>Structuring assembly files and managing sub-assemblies.</li>
+                            <li>Using standard mates (coincident, concentric, parallel) correctly.</li>
+                            <li>Applying advanced mechanical mates (gear, cam-follower, screw).</li>
+                            <li>Defining components to be fixed, rotating, or linear.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Skills Demonstrated:</h3>
+                        <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                            <li>Interference detection and resolving clearance issues.</li>
+                            <li>Creating realistic motion simulation paths.</li>
+                            <li>Generating Exploded Views for assembly instructions.</li>
+                            <li>Utilizing a library of standard parts (e.g., bolts, bearings).</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Download link removed as requested -->
+            </section>
+
+            <!-- Project 3: Technical Drafting (Blueprint) -->
+            <section id="drafting" class="project-details hidden">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10h2a2 2 0 002-2V9a2 2 0 00-2-2h-2m2 4h-2"></path></svg>
+                    3. Technical Drafting
+                </h2>
+                <p class="text-gray-700 mb-6 border-b pb-4">
+                    The objective is to create a complete, industry-compliant 2D blueprint for a manufactured component, ensuring clear communication with production teams.
+                </p>
+                <!-- LARGE VIDEO PLACEHOLDER -->
+                <div class="my-6 w-full bg-gray-200 rounded-xl shadow-inner flex items-center justify-center aspect-video max-w-full">
+                    <div class="text-gray-600 font-semibold text-xl p-8 text-center border-2 border-dashed border-gray-400 w-11/12 h-11/12 flex items-center justify-center">
+                        Video Placeholder: Drafting and Annotation Walkthrough
+                    </div>
+                </div>
+                <!-- END VIDEO PLACEHOLDER -->
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Core Objectives:</h3>
+                        <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                            <li>Selecting appropriate scale and sheet size.</li>
+                            <li>Creating primary, auxiliary, and section views.</li>
+                            <li>Properly dimensioning all features (chains, datums).</li>
+                            <li>Completing the title block with revision history.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Skills Demonstrated:</h3>
+                        <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                            <li>Adherence to ANSI/ISO drawing standards.</li>
+                            <li>Applying surface texture and weld symbols.</li>
+                            <li>Using Geometric Dimensioning and Tolerancing (GD&T) callouts.</li>
+                            <li>Generating a Bill of Materials (BOM) for assemblies.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Download link removed as requested -->
+            </section>
+            
+            <!-- Project 4: CAM Toolpath Generation -->
+            <section id="cam-toolpath" class="project-details hidden">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10m0 0h16v-4m-16 4l8-8m0 0l8-8"></path></svg>
+                    4. CAM Toolpath Generation
+                </h2>
+                <p class="text-gray-700 mb-6 border-b pb-4">
+                    This project bridges design and manufacturing by preparing the CAD model for a CNC machine, focusing on efficient tool selection and safe machining strategies.
+                </p>
+                <!-- LARGE VIDEO PLACEHOLDER -->
+                <div class="my-6 w-full bg-gray-200 rounded-xl shadow-inner flex items-center justify-center aspect-video max-w-full">
+                    <div class="text-gray-600 font-semibold text-xl p-8 text-center border-2 border-dashed border-gray-400 w-11/12 h-11/12 flex items-center justify-center">
+                        Video Placeholder: Toolpath Simulation and Optimization
+                    </div>
+                </div>
+                <!-- END VIDEO PLACEHOLDER -->
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Core Objectives:</h3>
+                        <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                            <li>Defining the machine origin and stock material setup.</li>
+                            <li>Selecting correct cutting tools and machining parameters (speeds/feeds).</li>
+                            <li>Creating roughing and finishing operations (2D & 3D milling).</li>
+                            <li>Simulating the toolpath to check for collisions and material removal.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Skills Demonstrated:</h3>
+                        <ul class="list-disc pl-5 ml-4 text-gray-600 space-y-2">
+                            <li>Generating and customizing G-code for a specific post-processor.</li>
+                            <li>Using rest machining to optimize remaining material removal.</li>
+                            <li>Defining complex fixturing and clamping setup.</li>
+                            <li>Understanding and applying cutting strategies (e.g., climb vs. conventional).</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Download link removed as requested -->
+            </section>
+        </div>
+
+
+    </main>
+
+</body>
+</html>
