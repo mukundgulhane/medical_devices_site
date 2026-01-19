@@ -41,7 +41,7 @@ def cadprojects():
 def firstpage():
     return render_template('firstpage.html')
 
-@app.route('/secondcontent')
+@app.route('/secondcontent') 
 def secondcontent():
     return render_template('secondcontent.html')
 
@@ -49,7 +49,4 @@ def secondcontent():
 def contentone():
     return render_template('contentone.html')
 
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+app.run(debug=True)
